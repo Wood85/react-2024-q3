@@ -24,10 +24,11 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react', 'react-compiler'],
   rules: {
     indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': 0,
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'react-compiler/react-compiler': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
   },
   settings: {
     react: {
