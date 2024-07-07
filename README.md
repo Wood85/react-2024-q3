@@ -1,30 +1,33 @@
-# React + TypeScript + Vite
+# SW Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application is the solution to the task `React project setup. Class components. Error boundary.` of the React Course/RS School.
 
-Currently, two official plugins are available:
+## Links:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Task](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/class-components.md)
 
-## Expanding the ESLint configuration
+## Description:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This application searching for Star Wars characters.
 
-- Configure the top-level `parserOptions` property like this:
+## Setting up the project:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+Prerequisites to run your project locally:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Installed [npm](https://www.npmjs.com/)
+- Installed [.git](https://git-scm.com/)
+- Code Editor
+- [Node](https://nodejs.org/en) version is 18.x or higher
+
+If you have all the prerequisites installed to run our project locally, you should download zip file with our repository or run `git clone`.
+
+Then navigate into project folder and run `npm install`
+
+## Scripts:
+
+- `npm run dev` start dev server
+- `npm run build` build for production
+- `npm run preview` locally preview production build
+- `npm run format:fix` formatting code
+- `npm run lint` start ESLint check
+- `npm run lint:fix` fix issues that can be fixed ESLint
