@@ -7,6 +7,7 @@ import search from './../../services/SWAPI/SWAPI';
 import { emptyValue } from './../../utils/constants';
 import Spinner from './../../components/spinner/spinner';
 import NotFound from './../../components/NotFound/NotFound';
+import BuggyButton from './../../components/BuggyButton/BuggyButton';
 
 class SearchPage extends React.Component {
   state = {
@@ -40,6 +41,7 @@ class SearchPage extends React.Component {
     return (
       <div className="search-page">
         <section className="search">
+          <BuggyButton />
           <SearchForm class="search-form" updateData={this.updateData} />
         </section>
         <section className="results">

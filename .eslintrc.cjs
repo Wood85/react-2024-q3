@@ -23,7 +23,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'react-compiler'],
   rules: {
-    'no-console': 'warn',
     indent: ['error', 2],
     'linebreak-style': 0,
     quotes: ['error', 'single'],
