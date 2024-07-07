@@ -8,6 +8,8 @@ async function search(req: string): Promise<IPeople[] | undefined> {
     const json = await response.json();
     if (json.results.length > 0) {
       return json.results;
+    } else {
+      return undefined;
     }
   }
 }

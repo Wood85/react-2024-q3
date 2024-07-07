@@ -4,32 +4,17 @@ import SearchForm from './../../components/SearchForm/SearchForm';
 import { IPeople } from 'interfaces/interfaces';
 import Item from './../../components/Item/Item';
 import search from './../../services/SWAPI/SWAPI';
+import { emptyValue } from './../../utils/constants';
+import Spinner from './../../components/spinner/spinner';
+import NotFound from './../../components/NotFound/NotFound';
 
 class SearchPage extends React.Component {
   state = {
-    value: [
-      {
-        birth_year: '',
-        eye_color: '',
-        films: [''],
-        gender: '',
-        hair_color: '',
-        height: '',
-        homeworld: '',
-        mass: '',
-        name: '',
-        skin_color: '',
-        created: '',
-        edited: '',
-        species: [''],
-        starships: [''],
-        url: '',
-        vehicles: [''],
-      },
-    ],
+    loading: false,
+    value: emptyValue,
   };
 
-  updateData = (value: IPeople[]) => {
+  updateData = (value: IPeople[] | undefined) => {
     this.setState({ value: value });
   };
 
@@ -37,9 +22,14 @@ class SearchPage extends React.Component {
     if (localStorage.getItem('SW_search_req') !== null) {
       const searchReq = localStorage.getItem('SW_search_req');
       if (searchReq !== null) {
+        this.setState({ loading: true });
         search(searchReq).then((res) => {
           if (res !== undefined) {
+            this.setState({ loading: false });
             this.setState({ value: res });
+          } else {
+            this.setState({ loading: false });
+            this.setState({ value: undefined });
           }
         });
       }
@@ -47,36 +37,32 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const itemElements = this.state.value.map((item) => (
-      <Item
-        key={crypto.randomUUID()}
-        name={item.name}
-        gender={item.gender}
-        birthYear={item.birth_year}
-        height={item.height}
-        mass={item.mass}
-        hairColor={item.hair_color}
-        skinColor={item.skin_color}
-        eyeColor={item.eye_color}
-      />
-    ));
-
-    if (this.state.value[0].name === '') {
-      return (
-        <div className="search-page">
-          <section className="search">
-            <SearchForm class="search-form" updateData={this.updateData} />
-          </section>
-          <section className="results"></section>
-        </div>
-      );
-    }
     return (
       <div className="search-page">
         <section className="search">
           <SearchForm class="search-form" updateData={this.updateData} />
         </section>
-        <section className="results">{itemElements}</section>
+        <section className="results">
+          {this.state.loading || (this.state.value !== undefined && this.state.value[0].name === '') ? (
+            <Spinner />
+          ) : this.state.value === undefined ? (
+            <NotFound />
+          ) : (
+            this.state.value.map((item) => (
+              <Item
+                key={crypto.randomUUID()}
+                name={item.name}
+                gender={item.gender}
+                birthYear={item.birth_year}
+                height={item.height}
+                mass={item.mass}
+                hairColor={item.hair_color}
+                skinColor={item.skin_color}
+                eyeColor={item.eye_color}
+              />
+            ))
+          )}
+        </section>
       </div>
     );
   }
