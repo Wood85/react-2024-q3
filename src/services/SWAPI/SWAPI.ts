@@ -1,11 +1,15 @@
-type Category = 'films' | 'people' | 'planets' | 'species' | 'starships' | 'vehicles';
-const attributes: Category[] = ['films', 'people', 'planets', 'species', 'starships', 'vehicles'];
+import { IPeople } from 'interfaces/interfaces';
 
-class SWAPI {
-  static search(req: string): Promise<Response[]> {
-    const requests = attributes.map((attribute) => fetch(`https://swapi.dev/api/${attribute}/?search=${req}`));
-    return Promise.all(requests);
+async function search(req: string): Promise<IPeople[] | undefined> {
+  const response = await fetch(`https://swapi.dev/api/people/?search=${req}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    const json = await response.json();
+    if (json.results.length > 0) {
+      return json.results;
+    }
   }
 }
 
-export default SWAPI;
+export default search;

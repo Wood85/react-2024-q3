@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import './SearchForm.css';
-import SWAPI from './../../services/SWAPI/SWAPI';
+import search from './../../services/SWAPI/SWAPI';
+import { IPeople } from 'interfaces/interfaces';
 
 interface IState {
   value: string;
@@ -8,7 +9,9 @@ interface IState {
 
 interface IFormProps {
   class: string;
+  updateData: (value: IPeople[]) => void;
 }
+
 class SearchForm extends React.Component {
   state: Readonly<IState>;
   props: Readonly<IFormProps>;
@@ -20,24 +23,19 @@ class SearchForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleChange(event: ChangeEvent<HTMLInputElement>) {
     this.setState({ value: event.target.value });
   }
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    SWAPI.search(this.state.value).then((responses) =>
-      responses.forEach(async (response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        } else {
-          const json = await response.json();
-          if (json.count > 0) {
-            console.log(json);
-          }
-        }
-      }),
-    );
+    search(this.state.value).then((res) => {
+      if (res !== undefined) {
+        this.props.updateData(res);
+        localStorage.setItem('SW_search_req', this.state.value);
+      }
+    });
   }
 
   render() {

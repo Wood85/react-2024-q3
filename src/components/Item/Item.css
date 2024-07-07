@@ -1,0 +1,12 @@
+.item {
+  display: flex;
+	flex-direction: column;
+	background-color: #646cffaa;
+	width: 210px;
+	height: 250px;
+	padding: 5px;
+	border-radius: 5px;
+}
+.name {
+	margin: 0;
+}
