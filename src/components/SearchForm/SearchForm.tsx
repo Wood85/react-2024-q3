@@ -3,6 +3,7 @@ import './SearchForm.css';
 import search from './../../services/SWAPI/SWAPI';
 import { IPeople } from 'interfaces/interfaces';
 import { emptyValue } from './../../utils/constants';
+import BuggyButton from './../../components/BuggyButton/BuggyButton';
 
 interface IState {
   value: string;
@@ -50,6 +51,7 @@ class SearchForm extends React.Component {
         <button type="submit" className="search-button button">
           Search
         </button>
+        <BuggyButton />
       </form>
     );
   }
