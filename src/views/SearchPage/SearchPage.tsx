@@ -1,4 +1,3 @@
-import React from 'react';
 import './SearchPage.css';
 import SearchForm from './../../components/SearchForm/SearchForm';
 import { IPeople } from 'interfaces/interfaces';
@@ -8,66 +7,79 @@ import { emptyValue } from './../../utils/constants';
 import Spinner from './../../components/spinner/spinner';
 import NotFound from './../../components/NotFound/NotFound';
 import Title from './../../components/Title/Title';
+import Pagination from './../../components/Pagination/Pagination';
+import { useState, useEffect } from 'react';
 
-class SearchPage extends React.Component {
-  state = {
-    loading: false,
-    value: emptyValue,
+const SearchPage = () => {
+  const [state, setState] = useState({ value: emptyValue });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const updateData = (value: IPeople[] | undefined) => {
+    setState({ value: value });
   };
 
-  updateData = (value: IPeople[] | undefined) => {
-    this.setState({ value: value });
-  };
-
-  componentDidMount(): void {
+  useEffect(() => {
     if (localStorage.getItem('SW_search_req') !== null) {
       const searchReq = localStorage.getItem('SW_search_req');
       if (searchReq !== null) {
-        this.setState({ loading: true });
+        setIsLoading(true);
         search(searchReq).then((res) => {
+          setIsLoading(true);
           if (res !== undefined) {
-            this.setState({ loading: false });
-            this.setState({ value: res });
+            setIsLoading(false);
+            setState({ value: res.results });
           } else {
-            this.setState({ loading: false });
-            this.setState({ value: undefined });
+            setIsLoading(false);
+            setState({ value: undefined });
           }
         });
       }
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="search-page">
-        <section className="search">
-          <Title />
-          <SearchForm class="search-form" updateData={this.updateData} />
-        </section>
-        <section className="results">
-          {this.state.loading || (this.state.value !== undefined && this.state.value[0].name === '') ? (
-            <Spinner />
-          ) : this.state.value === undefined ? (
-            <NotFound />
-          ) : (
-            this.state.value.map((item) => (
-              <Item
-                key={crypto.randomUUID()}
-                name={item.name}
-                gender={item.gender}
-                birthYear={item.birth_year}
-                height={item.height}
-                mass={item.mass}
-                hairColor={item.hair_color}
-                skinColor={item.skin_color}
-                eyeColor={item.eye_color}
-              />
-            ))
-          )}
-        </section>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="search-page">
+      <section className="search">
+        <Title />
+        <SearchForm class="search-form" updateData={updateData} />
+      </section>
+      <section className="results">
+        {isLoading || (state.value !== undefined && state.value[0].name === '') ? (
+          <Spinner />
+        ) : state.value === undefined ? (
+          <NotFound />
+        ) : (
+          state.value.map((item) => (
+            <Item
+              key={crypto.randomUUID()}
+              name={item.name}
+              gender={item.gender}
+              birthYear={item.birth_year}
+              height={item.height}
+              mass={item.mass}
+              hairColor={item.hair_color}
+              skinColor={item.skin_color}
+              eyeColor={item.eye_color}
+            />
+          ))
+        )}
+      </section>
+      <section className="pagination__container">
+        {isLoading || (state.value !== undefined && state.value[0].name === '') ? (
+          ''
+        ) : state.value === undefined ? (
+          ''
+        ) : (
+          <Pagination count={Math.floor(state.value.length / 10) + 1} />
+        )}
+        {/* {isLoading || (state.value !== undefined && state.value[0].name === '') ? (
+          ''
+        ) : (
+          <Pagination count={state.value / 10} />
+        )} */}
+      </section>
+    </div>
+  );
+};
 
 export default SearchPage;

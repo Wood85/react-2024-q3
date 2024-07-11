@@ -16,3 +16,10 @@ export interface IPeople {
   url: string;
   vehicles: string[];
 }
+
+export interface IResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: IPeople[];
+}

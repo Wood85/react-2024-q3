@@ -29,6 +29,7 @@ module.exports = {
     semi: ['error', 'always'],
     'react-compiler/react-compiler': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {

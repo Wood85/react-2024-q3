@@ -1,60 +1,47 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchForm.css';
 import search from './../../services/SWAPI/SWAPI';
 import { IPeople } from 'interfaces/interfaces';
 import { emptyValue } from './../../utils/constants';
 import BuggyButton from './../../components/BuggyButton/BuggyButton';
 
-interface IState {
-  value: string;
-}
-
 interface IFormProps {
   class: string;
   updateData: (value: IPeople[] | undefined, loading: boolean) => void;
 }
 
-class SearchForm extends React.Component {
-  state: Readonly<IState>;
-  props: Readonly<IFormProps>;
-  constructor(props: Readonly<IFormProps>) {
-    super(props);
-    this.state = { value: localStorage.getItem('SW_search_req') || '' };
-    this.props = props;
+const SearchForm = (props: Readonly<IFormProps>) => {
+  const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  const [state, setState] = useState(searchReq);
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setState({ value: event.target.value });
   }
 
-  handleChange(event: ChangeEvent<HTMLInputElement>) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.props.updateData(emptyValue, false);
-    search(this.state.value).then((res) => {
+    props.updateData(emptyValue, false);
+    search(state.value).then((res) => {
       if (res !== undefined) {
-        this.props.updateData(res, false);
-        localStorage.setItem('SW_search_req', this.state.value);
+        props.updateData(res.results, false);
+        localStorage.setItem('SW_search_req', state.value);
       } else {
-        this.props.updateData(undefined, false);
-        localStorage.setItem('SW_search_req', this.state.value);
+        props.updateData(undefined, false);
+        localStorage.setItem('SW_search_req', state.value);
       }
     });
   }
 
-  render() {
-    return (
-      <form className={this.props.class} onSubmit={this.handleSubmit}>
-        <input type="text" className="search-input" value={this.state.value} onChange={this.handleChange} />
-        <button type="submit" className="search-button button">
-          Search
-        </button>
-        <BuggyButton />
-      </form>
-    );
-  }
-}
+  return (
+    <form className={props.class} onSubmit={handleSubmit}>
+      <input type="text" className="search-input" value={state.value} onChange={handleChange} />
+      <button type="submit" className="search-button button">
+        Search
+      </button>
+      <BuggyButton />
+    </form>
+  );
+};
 
 export default SearchForm;
