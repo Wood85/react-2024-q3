@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './SearchForm.css';
 import { search } from './../../services/SWAPI/SWAPI';
 import { IResponse } from 'interfaces/interfaces';
@@ -7,13 +8,16 @@ import BuggyButton from './../../components/BuggyButton/BuggyButton';
 
 interface IFormProps {
   class: string;
-  updateData: (value: IResponse, loading: boolean) => void;
+  updateData: (value: IResponse, loading: boolean, page: number) => void;
 }
 
 const SearchForm = (props: Readonly<IFormProps>) => {
   const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
 
   const [state, setState] = useState(searchReq);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  searchParams.get('');
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setState({ value: event.target.value });
@@ -21,10 +25,11 @@ const SearchForm = (props: Readonly<IFormProps>) => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    props.updateData(emptyData, false);
-    search(state.value).then((res) => {
-      props.updateData(res, false);
+    props.updateData(emptyData, false, 1);
+    search(state.value, 1).then((res) => {
+      props.updateData(res, false, 1);
       localStorage.setItem('SW_search_req', state.value);
+      setSearchParams({ search: state.value, page: '1' });
     });
   }
 

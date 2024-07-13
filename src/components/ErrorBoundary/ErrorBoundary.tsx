@@ -30,7 +30,7 @@ class ErrorBoundary extends Component<IProps, IState> {
 
   render() {
     if (this.state.hasError) {
-      return <Fallback />;
+      return <Fallback message="Something went wrong" />;
     }
     return this.props.children;
   }

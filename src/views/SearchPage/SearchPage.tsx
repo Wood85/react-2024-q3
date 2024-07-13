@@ -9,25 +9,42 @@ import NotFound from './../../components/NotFound/NotFound';
 import Title from './../../components/Title/Title';
 import Pagination from './../../components/Pagination/Pagination';
 import { useState, useEffect, MouseEvent } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Fallback from './../../components/Fallback/Fallback';
 
 const SearchPage = () => {
   const [state, setState] = useState({ value: emptyData });
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPage, setSelectedPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const updateData = (value: IResponse) => {
+  const searchQuery = searchParams.get('search') || '';
+
+  const pageQuery = searchParams.get('page') || '1';
+
+  const [selectedPage, setSelectedPage] = useState(Number(pageQuery));
+
+  const updateData = (value: IResponse, loading: boolean, page: number) => {
     setState({ value: value });
+    setSelectedPage(page);
+    setIsLoading(loading);
   };
 
   useEffect(() => {
     if (localStorage.getItem('SW_search_req') !== null) {
-      const searchReq = localStorage.getItem('SW_search_req');
+      const searchReq = searchQuery || localStorage.getItem('SW_search_req');
       if (searchReq !== null) {
         setIsLoading(true);
-        search(searchReq).then((res) => {
-          setIsLoading(false);
-          setState({ value: res });
-        });
+        localStorage.setItem('SW_search_req', searchReq);
+        search(searchReq, Number(pageQuery))
+          .then((res) => {
+            setIsLoading(false);
+            setState({ value: res });
+            setSearchParams({ search: searchReq, page: pageQuery });
+          })
+          .catch(() => {
+            setIsLoading(false);
+            <Fallback message="Something went wrong" />;
+          });
       }
     }
   }, []);
@@ -44,6 +61,7 @@ const SearchPage = () => {
         search(req, num).then((res) => {
           setIsLoading(false);
           setState({ value: res });
+          setSearchParams({ search: req, page: `${num}` });
         });
       }
     }
@@ -53,10 +71,15 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.previous !== null) {
       setIsLoading(true);
-      setSelectedPage(Number(state.value.previous[state.value.previous.length - 1]));
+      const pageNum = state.value.previous[state.value.previous.length - 1];
+      setSelectedPage(Number(pageNum));
       searchFullAddress(state.value.previous).then((res) => {
         setIsLoading(false);
         setState({ value: res });
+        const req = localStorage.getItem('SW_search_req');
+        if (req !== null) {
+          setSearchParams({ search: req, page: pageNum });
+        }
       });
     }
   }
@@ -65,10 +88,15 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.next !== null) {
       setIsLoading(true);
-      setSelectedPage(Number(state.value.next[state.value.next.length - 1]));
+      const pageNum = state.value.next[state.value.next.length - 1];
+      setSelectedPage(Number(pageNum));
       searchFullAddress(state.value.next).then((res) => {
         setIsLoading(false);
         setState({ value: res });
+        const req = localStorage.getItem('SW_search_req');
+        if (req !== null) {
+          setSearchParams({ search: req, page: pageNum });
+        }
       });
     }
   }
@@ -84,6 +112,8 @@ const SearchPage = () => {
           <Spinner />
         ) : state.value.count === 0 ? (
           <NotFound />
+        ) : state.value.results === undefined ? (
+          <Fallback message="Invalid request" />
         ) : (
           state.value.results.map((item) => (
             <Item
@@ -101,11 +131,11 @@ const SearchPage = () => {
         )}
       </section>
       <section className="pagination__container">
-        {state.value.count < NUM_PER_PAGE + 1 ? (
+        {state.value.count < NUM_PER_PAGE + 1 || state.value.results === undefined ? (
           ''
         ) : (
           <Pagination
-            count={Math.floor(state.value.count / NUM_PER_PAGE) + 1}
+            count={Math.ceil(state.value.count / NUM_PER_PAGE)}
             selectedPage={selectedPage}
             onClick={clickPageNumber}
             onClickPrev={clickPrevPage}

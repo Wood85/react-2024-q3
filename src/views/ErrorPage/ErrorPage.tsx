@@ -1,4 +1,4 @@
-import { useRouteError } from 'react-router-dom';
+import { useRouteError, Link } from 'react-router-dom';
 import './ErrorPage.css';
 type ErrorResponse = {
   status: number;
@@ -16,6 +16,9 @@ const ErrorPage = () => {
       <p>
         <i>{error.statusText || error.message}</i>
       </p>
+      <Link to="/" className="button error-page__button">
+        Back
+      </Link>
     </div>
   );
 };
