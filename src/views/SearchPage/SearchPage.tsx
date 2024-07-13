@@ -13,6 +13,7 @@ import { useState, useEffect, MouseEvent } from 'react';
 const SearchPage = () => {
   const [state, setState] = useState({ value: emptyData });
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPage, setSelectedPage] = useState(1);
 
   const updateData = (value: IResponse) => {
     setState({ value: value });
@@ -39,6 +40,7 @@ const SearchPage = () => {
         (state.value.previous !== null && Number(state.value.previous[state.value.previous.length - 1]) + 1 !== num)
       ) {
         setIsLoading(true);
+        setSelectedPage(num);
         search(req, num).then((res) => {
           setIsLoading(false);
           setState({ value: res });
@@ -51,6 +53,7 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.previous !== null) {
       setIsLoading(true);
+      setSelectedPage(Number(state.value.previous[state.value.previous.length - 1]));
       searchFullAddress(state.value.previous).then((res) => {
         setIsLoading(false);
         setState({ value: res });
@@ -62,6 +65,7 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.next !== null) {
       setIsLoading(true);
+      setSelectedPage(Number(state.value.next[state.value.next.length - 1]));
       searchFullAddress(state.value.next).then((res) => {
         setIsLoading(false);
         setState({ value: res });
@@ -102,6 +106,7 @@ const SearchPage = () => {
         ) : (
           <Pagination
             count={Math.floor(state.value.count / NUM_PER_PAGE) + 1}
+            selectedPage={selectedPage}
             onClick={clickPageNumber}
             onClickPrev={clickPrevPage}
             onClickNext={clickNextPage}

@@ -7,6 +7,7 @@ interface IPaginationProps {
   onClick: (page: number) => void;
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void;
   onClickNext: (event: MouseEvent<HTMLButtonElement>) => void;
+  selectedPage: number;
 }
 
 const Pagination = (props: IPaginationProps) => {
@@ -22,7 +23,7 @@ const Pagination = (props: IPaginationProps) => {
       </button>
       <div className="pagination__page-numbers">
         {pageNumbers.map((item: number) => (
-          <PageNumber key={crypto.randomUUID()} num={item} onClick={props.onClick} />
+          <PageNumber key={crypto.randomUUID()} num={item} onClick={props.onClick} selectedPage={props.selectedPage} />
         ))}
       </div>
       <button className="pagination__next button" onClick={props.onClickNext}>
