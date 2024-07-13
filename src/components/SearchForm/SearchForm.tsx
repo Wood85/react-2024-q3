@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchForm.css';
-import search from './../../services/SWAPI/SWAPI';
-import { IPeople } from 'interfaces/interfaces';
-import { emptyValue } from './../../utils/constants';
+import { search } from './../../services/SWAPI/SWAPI';
+import { IResponse } from 'interfaces/interfaces';
+import { emptyData } from './../../utils/constants';
 import BuggyButton from './../../components/BuggyButton/BuggyButton';
 
 interface IFormProps {
   class: string;
-  updateData: (value: IPeople[] | undefined, loading: boolean) => void;
+  updateData: (value: IResponse, loading: boolean) => void;
 }
 
 const SearchForm = (props: Readonly<IFormProps>) => {
@@ -21,15 +21,10 @@ const SearchForm = (props: Readonly<IFormProps>) => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    props.updateData(emptyValue, false);
+    props.updateData(emptyData, false);
     search(state.value).then((res) => {
-      if (res !== undefined) {
-        props.updateData(res.results, false);
-        localStorage.setItem('SW_search_req', state.value);
-      } else {
-        props.updateData(undefined, false);
-        localStorage.setItem('SW_search_req', state.value);
-      }
+      props.updateData(res, false);
+      localStorage.setItem('SW_search_req', state.value);
     });
   }
 

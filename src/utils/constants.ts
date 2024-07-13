@@ -22,8 +22,10 @@ export const emptyValue: IPeople[] | undefined = [
 ];
 
 export const emptyData: IResponse = {
-  count: 0,
+  count: -1,
   next: null,
   previous: null,
   results: [],
 };
+
+export const NUM_PER_PAGE: number = 10;

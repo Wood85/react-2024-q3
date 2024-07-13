@@ -1,17 +1,27 @@
 import { IResponse } from 'interfaces/interfaces';
 
-async function search(req: string): Promise<IResponse | undefined> {
-  const response = await fetch(`https://swapi.dev/api/people/?search=${req}`);
+export async function search(req: string, page?: number): Promise<IResponse> {
+  let url: string;
+  if (page) {
+    url = `https://swapi.dev/api/people/?search=${req}&page=${page}`;
+  } else {
+    url = `https://swapi.dev/api/people/?search=${req}`;
+  }
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   } else {
     const json = await response.json();
-    if (json.count > 0) {
-      return json;
-    } else {
-      return undefined;
-    }
+    return json;
   }
 }
 
-export default search;
+export async function searchFullAddress(address: string): Promise<IResponse> {
+  const response = await fetch(address);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    const json = await response.json();
+    return json;
+  }
+}
