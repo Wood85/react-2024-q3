@@ -1,0 +1,18 @@
+.error-page {
+	font-weight: 700;
+	font-size: 22px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.error-page h1 {
+	font-size: 36px;
+}
+
+.error-page__status {
+  font-size: 30px;
+}
