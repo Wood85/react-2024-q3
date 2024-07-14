@@ -1,4 +1,4 @@
-import { IResponse } from 'interfaces/interfaces';
+import { IPeople, IResponse } from 'interfaces/interfaces';
 
 export async function search(req: string, page?: number): Promise<IResponse> {
   let url: string;
@@ -10,12 +10,6 @@ export async function search(req: string, page?: number): Promise<IResponse> {
   const response = await fetch(url);
   const json = await response.json();
   return json;
-  // if (!response.ok) {
-  //   throw new Error(`HTTP error! status: ${response.status}`);
-  // } else {
-  //   const json = await response.json();
-  //   return json;
-  // }
 }
 
 export async function searchFullAddress(address: string): Promise<IResponse> {
@@ -26,4 +20,10 @@ export async function searchFullAddress(address: string): Promise<IResponse> {
     const json = await response.json();
     return json;
   }
+}
+
+export async function searchCharacter(url: string): Promise<IPeople> {
+  const response = await fetch(url);
+  const json = await response.json();
+  return json;
 }

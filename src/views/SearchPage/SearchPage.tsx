@@ -2,8 +2,8 @@ import './SearchPage.css';
 import SearchForm from './../../components/SearchForm/SearchForm';
 import { IResponse } from 'interfaces/interfaces';
 import Item from './../../components/Item/Item';
-import { search, searchFullAddress } from './../../services/SWAPI/SWAPI';
-import { emptyData, NUM_PER_PAGE } from './../../utils/constants';
+import { search, searchFullAddress, searchCharacter } from './../../services/SWAPI/SWAPI';
+import { emptyCharacter, emptyData, NUM_PER_PAGE } from './../../utils/constants';
 import Spinner from './../../components/spinner/spinner';
 import NotFound from './../../components/NotFound/NotFound';
 import Title from './../../components/Title/Title';
@@ -11,10 +11,14 @@ import Pagination from './../../components/Pagination/Pagination';
 import { useState, useEffect, MouseEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Fallback from './../../components/Fallback/Fallback';
+import InfoContainer from './../../components/InfoContainer/InfoContainer';
 
 const SearchPage = () => {
   const [state, setState] = useState({ value: emptyData });
   const [isLoading, setIsLoading] = useState(false);
+  const [isInfoLoading, setIsInfoLoading] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [info, setInfo] = useState(emptyCharacter);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get('search') || '';
@@ -27,6 +31,28 @@ const SearchPage = () => {
     setState({ value: value });
     setSelectedPage(page);
     setIsLoading(loading);
+    setShowInfo(false);
+    setInfo(emptyCharacter);
+  };
+
+  const onClickItem = (url: string) => {
+    setShowInfo(true);
+    setIsInfoLoading(true);
+    searchCharacter(url)
+      .then((res) => {
+        setIsInfoLoading(false);
+        setInfo(res);
+        setSearchParams({ character: res.url.slice(29, -1) });
+      })
+      .catch(() => <Fallback message="Something went wrong" />);
+  };
+
+  const handleCloseClick = () => {
+    setShowInfo(false);
+    const req = localStorage.getItem('SW_search_req');
+    if (req !== null) {
+      setSearchParams({ search: req, page: `${selectedPage}` });
+    }
   };
 
   useEffect(() => {
@@ -57,6 +83,8 @@ const SearchPage = () => {
         (state.value.previous !== null && Number(state.value.previous[state.value.previous.length - 1]) + 1 !== num)
       ) {
         setIsLoading(true);
+        setShowInfo(false);
+        setInfo(emptyCharacter);
         setSelectedPage(num);
         search(req, num).then((res) => {
           setIsLoading(false);
@@ -71,6 +99,8 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.previous !== null) {
       setIsLoading(true);
+      setShowInfo(false);
+      setInfo(emptyCharacter);
       const pageNum = state.value.previous[state.value.previous.length - 1];
       setSelectedPage(Number(pageNum));
       searchFullAddress(state.value.previous).then((res) => {
@@ -88,6 +118,8 @@ const SearchPage = () => {
     event.preventDefault();
     if (state.value.next !== null) {
       setIsLoading(true);
+      setShowInfo(false);
+      setInfo(emptyCharacter);
       const pageNum = state.value.next[state.value.next.length - 1];
       setSelectedPage(Number(pageNum));
       searchFullAddress(state.value.next).then((res) => {
@@ -102,33 +134,37 @@ const SearchPage = () => {
   }
 
   return (
-    <div className="search-page">
+    <div className="search-page" onClick={handleCloseClick}>
       <section className="search">
         <Title />
         <SearchForm class="search-form" updateData={updateData} />
       </section>
-      <section className="results">
-        {isLoading || state.value.count === -1 ? (
-          <Spinner />
-        ) : state.value.count === 0 ? (
-          <NotFound />
-        ) : state.value.results === undefined ? (
-          <Fallback message="Invalid request" />
-        ) : (
-          state.value.results.map((item) => (
-            <Item
-              key={crypto.randomUUID()}
-              name={item.name}
-              gender={item.gender}
-              birthYear={item.birth_year}
-              height={item.height}
-              mass={item.mass}
-              hairColor={item.hair_color}
-              skinColor={item.skin_color}
-              eyeColor={item.eye_color}
-            />
-          ))
-        )}
+      <section className="results" onClick={handleCloseClick}>
+        <div className="items">
+          {isLoading || state.value.count === -1 ? (
+            <Spinner />
+          ) : state.value.count === 0 ? (
+            <NotFound />
+          ) : state.value.results === undefined ? (
+            <Fallback message="Invalid request" />
+          ) : (
+            state.value.results.map((item) => (
+              <Item
+                key={crypto.randomUUID()}
+                name={item.name}
+                gender={item.gender}
+                birthYear={item.birth_year}
+                height={item.height}
+                mass={item.mass}
+                hairColor={item.hair_color}
+                skinColor={item.skin_color}
+                eyeColor={item.eye_color}
+                onClick={() => onClickItem(item.url)}
+              />
+            ))
+          )}
+        </div>
+        {showInfo ? <InfoContainer info={info} isLoading={isInfoLoading} handleCloseClick={handleCloseClick} /> : ''}
       </section>
       <section className="pagination__container">
         {state.value.count < NUM_PER_PAGE + 1 || state.value.results === undefined ? (

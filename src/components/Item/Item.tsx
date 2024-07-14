@@ -1,6 +1,6 @@
 import './Item.css';
 
-interface IItem {
+interface IItemProps {
   name: string;
   gender: string;
   birthYear: string;
@@ -9,19 +9,20 @@ interface IItem {
   hairColor: string;
   skinColor: string;
   eyeColor: string;
+  onClick: () => void;
 }
 
-const Item = (props: Readonly<IItem>) => {
+const Item = (props: Readonly<IItemProps>) => {
   return (
-    <div className="item">
+    <div
+      className="item"
+      onClick={(e) => {
+        e.stopPropagation();
+        props.onClick();
+      }}
+    >
       <h2 className="name field">{props.name}</h2>
       <div className="gender field">gender: {props.gender}</div>
-      <div className="birth-year field">birth year: {props.birthYear}</div>
-      <div className="height field">height: {props.height}</div>
-      <div className="mass field">mass: {props.mass}</div>
-      <div className="hair-color field">hair color: {props.hairColor}</div>
-      <div className="skin-color field">skin color: {props.skinColor}</div>
-      <div className="eye-color field">eye color: {props.eyeColor}</div>
     </div>
   );
 };

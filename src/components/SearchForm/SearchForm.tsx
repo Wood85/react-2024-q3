@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import './SearchForm.css';
 import { search } from './../../services/SWAPI/SWAPI';
@@ -34,7 +34,11 @@ const SearchForm = (props: Readonly<IFormProps>) => {
   }
 
   return (
-    <form className={props.class} onSubmit={handleSubmit}>
+    <form
+      className={props.class}
+      onSubmit={handleSubmit}
+      onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
+    >
       <input type="text" className="search-input" value={state.value} onChange={handleChange} />
       <button type="submit" className="search-button button">
         Search

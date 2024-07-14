@@ -1,12 +1,24 @@
 import { useEffect } from 'react';
 import './App.css';
 import SearchPage from './views/SearchPage/SearchPage';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ErrorPage from './views/ErrorPage/ErrorPage';
 
-interface IProps {
-  class: string;
-}
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <SearchPage />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'search',
+        element: <SearchPage />,
+      },
+    ],
+  },
+]);
 
-const App = (props: Readonly<IProps>) => {
+const App = () => {
   useEffect(() => {
     if (!localStorage.getItem('SW_search_req')) {
       localStorage.setItem('SW_search_req', '');
@@ -14,8 +26,8 @@ const App = (props: Readonly<IProps>) => {
   }, []);
 
   return (
-    <div className={props.class}>
-      <SearchPage />
+    <div className="app">
+      <RouterProvider router={router} />
     </div>
   );
 };
