@@ -2,7 +2,7 @@ import './Pagination.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
 import { MouseEvent } from 'react';
 
-interface IPaginationProps {
+export interface IPaginationProps {
   count: number;
   onClick: (page: number) => void;
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void;

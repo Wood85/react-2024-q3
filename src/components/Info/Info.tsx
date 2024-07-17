@@ -1,12 +1,12 @@
 import './Info.css';
 import { IPeople } from './../../interfaces/interfaces';
 
-interface IInfoContainerProps {
+export interface IInfoProps {
   info: IPeople;
   handleCloseClick: () => void;
 }
 
-const Info = (props: IInfoContainerProps) => {
+const Info = (props: IInfoProps) => {
   return (
     <div className="info">
       <h2 className="name field">{props.info.name}</h2>

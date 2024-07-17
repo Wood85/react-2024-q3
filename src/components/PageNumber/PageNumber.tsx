@@ -1,6 +1,6 @@
 import './PageNumber.css';
 
-interface IPageNumberProps {
+export interface IPageNumberProps {
   num: number;
   onClick: (page: number) => void;
   selectedPage: number;

@@ -5,8 +5,9 @@ import { search } from './../../services/SWAPI/SWAPI';
 import { IResponse } from 'interfaces/interfaces';
 import { emptyData } from './../../utils/constants';
 import BuggyButton from './../../components/BuggyButton/BuggyButton';
+import Input from './../Input/Input';
 
-interface IFormProps {
+export interface IFormProps {
   class: string;
   updateData: (value: IResponse, loading: boolean, page: number) => void;
 }
@@ -35,11 +36,12 @@ const SearchForm = (props: Readonly<IFormProps>) => {
 
   return (
     <form
+      data-testid="search-form"
       className={props.class}
       onSubmit={handleSubmit}
       onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
     >
-      <input type="text" className="search-input" value={state.value} onChange={handleChange} />
+      <Input class="search-input" value={state.value} handleInputChange={handleChange} />
       <button type="submit" className="search-button button">
         Search
       </button>

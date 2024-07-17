@@ -3,7 +3,7 @@ import Spinner from './../spinner/spinner';
 import Info from './../Info/Info';
 import { IPeople } from './../../interfaces/interfaces';
 
-interface IInfoContainerProps {
+export interface IInfoContainerProps {
   info: IPeople;
   isLoading: boolean;
   handleCloseClick: () => void;

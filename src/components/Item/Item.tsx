@@ -1,15 +1,10 @@
 import './Item.css';
 
-interface IItemProps {
+export interface IItemProps {
   name: string;
   gender: string;
-  birthYear: string;
-  height: string;
-  mass: string;
-  hairColor: string;
-  skinColor: string;
-  eyeColor: string;
-  onClick: () => void;
+  url: string;
+  onClick: (url: string) => void;
 }
 
 const Item = (props: Readonly<IItemProps>) => {
@@ -18,7 +13,7 @@ const Item = (props: Readonly<IItemProps>) => {
       className="item"
       onClick={(e) => {
         e.stopPropagation();
-        props.onClick();
+        props.onClick(props.url);
       }}
     >
       <h2 className="name field">{props.name}</h2>

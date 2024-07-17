@@ -13,11 +13,9 @@ const BuggyButton = () => {
   }
 
   return (
-    <div>
-      <button className="button buggy-button" onClick={handleClick}>
-        Call Error
-      </button>
-    </div>
+    <button className="button buggy-button" onClick={handleClick}>
+      Call Error
+    </button>
   );
 };
 

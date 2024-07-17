@@ -1,17 +1,15 @@
 import './SearchPage.css';
 import SearchForm from './../../components/SearchForm/SearchForm';
 import { IResponse } from 'interfaces/interfaces';
-import Item from './../../components/Item/Item';
 import { search, searchFullAddress, searchCharacter } from './../../services/SWAPI/SWAPI';
 import { emptyCharacter, emptyData, NUM_PER_PAGE } from './../../utils/constants';
-import Spinner from './../../components/spinner/spinner';
-import NotFound from './../../components/NotFound/NotFound';
 import Title from './../../components/Title/Title';
 import Pagination from './../../components/Pagination/Pagination';
 import { useState, useEffect, MouseEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Fallback from './../../components/Fallback/Fallback';
 import InfoContainer from './../../components/InfoContainer/InfoContainer';
+import ItemList from './../../components/ItemList/ItemList';
 
 const SearchPage = () => {
   const [state, setState] = useState({ value: emptyData });
@@ -134,36 +132,13 @@ const SearchPage = () => {
   }
 
   return (
-    <div className="search-page" onClick={handleCloseClick}>
+    <div className="search-page" data-testid="search-page" onClick={handleCloseClick}>
       <section className="search">
         <Title />
         <SearchForm class="search-form" updateData={updateData} />
       </section>
       <section className="results" onClick={handleCloseClick}>
-        <div className="items">
-          {isLoading || state.value.count === -1 ? (
-            <Spinner />
-          ) : state.value.count === 0 ? (
-            <NotFound />
-          ) : state.value.results === undefined ? (
-            <Fallback message="Invalid request" />
-          ) : (
-            state.value.results.map((item) => (
-              <Item
-                key={crypto.randomUUID()}
-                name={item.name}
-                gender={item.gender}
-                birthYear={item.birth_year}
-                height={item.height}
-                mass={item.mass}
-                hairColor={item.hair_color}
-                skinColor={item.skin_color}
-                eyeColor={item.eye_color}
-                onClick={() => onClickItem(item.url)}
-              />
-            ))
-          )}
-        </div>
+        <ItemList isLoading={isLoading} count={state.value.count} results={state.value.results} onClick={onClickItem} />
         {showInfo ? <InfoContainer info={info} isLoading={isInfoLoading} handleCloseClick={handleCloseClick} /> : ''}
       </section>
       <section className="pagination__container">
