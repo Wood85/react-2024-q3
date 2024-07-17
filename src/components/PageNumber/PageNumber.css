@@ -1,0 +1,13 @@
+.pagination__page-number {
+  width: 30px;
+	height: 30px;
+	background-color: #646c64;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.pagination__page-number_active {
+	background-color: #007dffa3;
+}
