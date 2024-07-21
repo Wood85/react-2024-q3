@@ -1,30 +1,52 @@
 import './PageNumber.css';
+import { useAppSelector, useAppDispatch } from './../../hooks/redux';
+import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
+import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
 
 export interface IPageNumberProps {
   num: number;
-  onClick: (page: number) => void;
-  selectedPage: number;
 }
 const PageNumber = (props: IPageNumberProps) => {
+  const { num } = props;
+  const dispatch = useAppDispatch();
+
+  function selectPage() {
+    dispatch(pageNum(num));
+  }
+
+  const [getCharacters] = useGetCharactersMutation();
+
+  const getPageWithCharacters = async () => {
+    const req = localStorage.getItem('SW_search_req');
+    if (req !== null) {
+      const res = await getCharacters({ req, page: num }).unwrap();
+      dispatch(setCurrentCharacters(res));
+    }
+  };
+
+  const selectedPage = useAppSelector((state) => state.characters.pageNum);
+
   return (
     <>
-      {props.selectedPage === props.num ? (
+      {selectedPage === num ? (
         <div
           className="pagination__page-number pagination__page-number_active"
           onClick={() => {
-            props.onClick(props.num);
+            selectPage();
+            getPageWithCharacters();
           }}
         >
-          {props.num}
+          {num}
         </div>
       ) : (
         <div
           className="pagination__page-number"
           onClick={() => {
-            props.onClick(props.num);
+            selectPage();
+            getPageWithCharacters();
           }}
         >
-          {props.num}
+          {num}
         </div>
       )}
     </>

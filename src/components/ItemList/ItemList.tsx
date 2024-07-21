@@ -1,35 +1,24 @@
-import { IPeople } from 'interfaces/interfaces';
+import { useAppSelector } from './../../hooks/redux';
 import Spinner from './../spinner/spinner';
 import NotFound from './../NotFound/NotFound';
 import Fallback from './../Fallback/Fallback';
 import Item from './../Item/Item';
 
-export interface IItemListProps {
-  isLoading: boolean;
-  count: number;
-  results: IPeople[];
-  onClick: (url: string) => void;
-}
+const ItemList = () => {
+  const items = useAppSelector((state) => state.characters.data.results);
+  const count = useAppSelector((state) => state.characters.data.count);
+  const isLoading = useAppSelector((state) => state.characters.isLoading);
 
-const ItemList = (props: IItemListProps) => {
   return (
     <div className="items">
-      {props.isLoading || props.count === -1 ? (
+      {isLoading || count === -1 ? (
         <Spinner />
-      ) : props.count === 0 ? (
+      ) : count === 0 ? (
         <NotFound />
-      ) : props.results === undefined ? (
+      ) : items === undefined ? (
         <Fallback message="Invalid request" />
       ) : (
-        props.results.map((item) => (
-          <Item
-            key={crypto.randomUUID()}
-            name={item.name}
-            gender={item.gender}
-            url={item.url}
-            onClick={props.onClick}
-          />
-        ))
+        items.map((item) => <Item key={crypto.randomUUID()} name={item.name} gender={item.gender} url={item.url} />)
       )}
     </div>
   );

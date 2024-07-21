@@ -13,6 +13,7 @@ const App = () => {
 
   return (
     <div className="app" data-testid="app">
+      <div></div>
       <Router>
         <Routes>
           <Route path="/" element={<SearchPage />}></Route>

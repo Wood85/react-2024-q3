@@ -1,37 +1,42 @@
 import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import './SearchForm.css';
-import { search } from './../../services/SWAPI/SWAPI';
-import { IResponse } from 'interfaces/interfaces';
-import { emptyData } from './../../utils/constants';
 import BuggyButton from './../../components/BuggyButton/BuggyButton';
 import Input from './../Input/Input';
+import { useAppDispatch } from './../../hooks/redux';
+import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 
 export interface IFormProps {
   class: string;
-  updateData: (value: IResponse, loading: boolean, page: number) => void;
 }
 
 const SearchForm = (props: Readonly<IFormProps>) => {
   const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
 
-  const [state, setState] = useState(searchReq);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
 
-  searchParams.get('');
+  const [state, setState] = useState(searchReq);
+
+  const [getCharacters] = useGetCharactersMutation();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setState({ value: event.target.value });
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    props.updateData(emptyData, false, 1);
-    search(state.value, 1).then((res) => {
-      props.updateData(res, false, 1);
-      localStorage.setItem('SW_search_req', state.value);
-      setSearchParams({ search: state.value, page: '1' });
-    });
+    const formData = new FormData(event.currentTarget);
+    const searchReqData = formData.get('search');
+    if (typeof searchReqData === 'string') {
+      const res = await getCharacters({ req: searchReqData }).unwrap();
+      dispatch(setCurrentCharacters(res));
+      localStorage.setItem('SW_search_req', searchReqData);
+    } else {
+      const res = await getCharacters({ req: '' }).unwrap();
+      dispatch(setCurrentCharacters(res));
+      localStorage.setItem('SW_search_req', '');
+    }
+    dispatch(pageNum(1));
   }
 
   return (
@@ -41,7 +46,7 @@ const SearchForm = (props: Readonly<IFormProps>) => {
       onSubmit={handleSubmit}
       onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
     >
-      <Input class="search-input" value={state.value} handleInputChange={handleChange} />
+      <Input class="search-input" name="search" value={state.value} handleInputChange={handleChange} />
       <button type="submit" className="search-button button">
         Search
       </button>

@@ -1,29 +1,36 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { IPeople, IResponse } from 'interfaces/interfaces';
 
-export async function search(req: string, page?: number): Promise<IResponse> {
-  let url: string;
-  if (page) {
-    url = `https://swapi.dev/api/people/?search=${req}&page=${page}`;
-  } else {
-    url = `https://swapi.dev/api/people/?search=${req}`;
-  }
-  const response = await fetch(url);
-  const json = await response.json();
-  return json;
+export interface ISearchQuery {
+  req: string;
+  page?: number;
 }
 
-export async function searchFullAddress(address: string): Promise<IResponse> {
-  const response = await fetch(address);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  } else {
-    const json = await response.json();
-    return json;
-  }
-}
+export const swApi = createApi({
+  reducerPath: 'swApi',
+  tagTypes: ['Characters'],
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/' }),
+  endpoints: (build) => ({
+    getCharacters: build.mutation<IResponse, ISearchQuery>({
+      query: ({ req, page = 1 }) => ({
+        url: `people/?search=${req}&page=${page}`,
+        method: 'GET',
+      }),
+    }),
+    getInfo: build.mutation<IPeople, string>({
+      query: (param) => ({
+        url: param,
+        method: 'GET',
+      }),
+    }),
+    getPageByFullAddress: build.mutation<IResponse, string>({
+      query: (param) => ({
+        url: param,
+        method: 'GET',
+      }),
+    }),
+  }),
+});
 
-export async function searchCharacter(url: string): Promise<IPeople> {
-  const response = await fetch(url);
-  const json = await response.json();
-  return json;
-}
+export const { useGetCharactersMutation, useGetInfoMutation, useGetPageByFullAddressMutation } = swApi;
