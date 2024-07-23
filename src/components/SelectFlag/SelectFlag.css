@@ -1,0 +1,13 @@
+.flag {
+	width: 20px;
+	height: 20px;
+	background-color: #646c64;;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border-radius: 3px;
+}
+
+.flag_hide {
+	display: none;
+}
