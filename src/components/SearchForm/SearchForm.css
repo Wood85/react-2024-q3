@@ -11,3 +11,7 @@
 .search-input:focus {
 	outline: none;
 }
+
+.search-button {
+	width: 90px;height: 30px;
+}

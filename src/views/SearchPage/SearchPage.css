@@ -1,7 +1,8 @@
 .search-page {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	height: calc(100% - 100px);
+	margin-bottom: 100px;
 	width: 100%;
 }
 
@@ -37,6 +38,15 @@
 	align-items: center;
 	height: 100%;
 	width: 400px;
+}
+
+.flyout-container {
+	position: fixed;
+	left: 50%;
+	bottom: 25px;
+	transform: translate(-50%, 0);
+	display: flex;
+	justify-content: center;
 }
 
 @media screen and (max-width: 880px) {

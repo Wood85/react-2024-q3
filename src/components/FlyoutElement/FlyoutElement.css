@@ -1,0 +1,17 @@
+.flyout {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 400px;
+	height: 50px;
+	background-color: #000000;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.flyout__unselect,
+.flyout__download {
+	width: 100px;
+	height: 30px;
+	text-decoration: none;
+}

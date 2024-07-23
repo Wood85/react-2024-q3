@@ -10,6 +10,7 @@ import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 import InfoContainer from './../../components/InfoContainer/InfoContainer';
 import ItemList from './../../components/ItemList/ItemList';
 import { setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import FlyoutElement from './../../components/FlyoutElement/FlyoutElement';
 
 const SearchPage = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const SearchPage = () => {
   const count = useAppSelector((state) => state.characters.data.count);
   const showInfo = useAppSelector((state) => state.info.isShow);
   const results = useAppSelector((state) => state.characters.data.results);
+  const selectedArr = useAppSelector((state) => state.selected.selected);
 
   useEffect(() => {
     if (localStorage.getItem('SW_search_req') !== null) {
@@ -47,6 +49,7 @@ const SearchPage = () => {
       <section className="pagination__container">
         {count < NUM_PER_PAGE + 1 || results === undefined ? '' : <Pagination />}
       </section>
+      <section className="flyout-container">{selectedArr.length > 0 ? <FlyoutElement /> : ''}</section>
     </div>
   );
 };
