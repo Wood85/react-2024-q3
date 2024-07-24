@@ -4,8 +4,35 @@
 	gap: 20px;
 }
 
+.title-container.theme-dark .logo {
+	width: 120px;
+	height: 120px;
+	background-image: url('./../../assets/star-wars-white.svg');
+	background-repeat: no-repeat;
+  background-size: cover;
+	transition: all 0.3s;
+}
+
+.title-container.theme-light .logo {
+	width: 120px;
+	height: 120px;
+	background-image: url('./../../assets/star-wars-black.svg');
+	background-repeat: no-repeat;
+  background-size: cover;
+	transition: all 0.3s;
+}
+
 .title-text {
 	font-size: 26px;
 	margin: 0;
+}
+
+.theme-dark {
+	color: #ffffff;
+	transition: all 0.3s;
+}
+
+.theme-light {
+	transition: all 0.3s;
 	color: #000000;
 }

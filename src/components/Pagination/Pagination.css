@@ -21,3 +21,15 @@
 .pagination__next {
   padding-bottom: 5px;
 }
+
+.pagination__prev.theme-dark,
+.pagination__next.theme-dark {
+  color: #ffffff;
+	transition: all 0.3s;
+}
+
+.pagination__prev.theme-light,
+.pagination__next.theme-light {
+  color: #000000;
+	transition: all 0.3s;
+}

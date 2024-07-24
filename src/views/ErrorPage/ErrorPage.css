@@ -9,6 +9,16 @@
 	flex-direction: column;
 }
 
+.error-page.theme-dark {
+  background-color: #242424;
+	transition: all 0.3s;
+}
+
+.error-page.theme-light {
+	background-color: #ffffff;
+	transition: all 0.3s;
+}
+
 .error-page h1 {
 	font-size: 36px;
 }
@@ -20,4 +30,10 @@
 .error-page__button {
 	font-size: 16px;
 	text-decoration: none;
+	width: 120px;
+	height: 38px;
+}
+
+.error-page__button.theme-light {
+	color: #ffffff;
 }

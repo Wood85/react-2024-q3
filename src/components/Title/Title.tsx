@@ -1,10 +1,9 @@
 import './Title.css';
-import starWarsLogo from './../../assets/star-wars.svg';
 
-const Title = () => {
+const Title = (props: { theme: string }) => {
   return (
-    <div className="title-container">
-      <img src={starWarsLogo} className="logo" alt="SW logo" />
+    <div className={`${props.theme} title-container`}>
+      <div className="logo"></div>
       <h1 className="title-text">find your character</h1>
     </div>
   );

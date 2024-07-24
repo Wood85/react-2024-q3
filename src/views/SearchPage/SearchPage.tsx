@@ -4,15 +4,19 @@ import { useAppDispatch } from './../../hooks/redux';
 import { NUM_PER_PAGE } from './../../utils/constants';
 import Title from './../../components/Title/Title';
 import Pagination from './../../components/Pagination/Pagination';
-import { useEffect } from 'react';
+import { FC, useEffect, useContext } from 'react';
 import { useAppSelector } from './../../hooks/redux';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 import InfoContainer from './../../components/InfoContainer/InfoContainer';
 import ItemList from './../../components/ItemList/ItemList';
 import { setCurrentCharacters } from './../../store/reducers/charactersSlice';
 import FlyoutElement from './../../components/FlyoutElement/FlyoutElement';
+import SwitchTheme from './../../components/SwitchTheme/SwitchTheme';
+import { ThemeContext } from './../../context/ThemeContext';
 
-const SearchPage = () => {
+const SearchPage: FC = () => {
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+
   const dispatch = useAppDispatch();
 
   const [getCharacters] = useGetCharactersMutation();
@@ -34,13 +38,24 @@ const SearchPage = () => {
         searchCharacters(searchReq);
       }
     }
+    if (localStorage.getItem('SW_theme') !== null) {
+      const theme = localStorage.getItem('SW_theme');
+      if (theme !== null) {
+        if (theme === 'dark') {
+          toggleTheme();
+        }
+      }
+    }
   }, []);
+
+  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
 
   return (
     <div className="search-page" data-testid="search-page">
       <section className="search">
-        <Title />
-        <SearchForm class="search-form" />
+        <Title theme={theme} />
+        <SearchForm theme={theme} class="search-form" />
+        <SwitchTheme />
       </section>
       <section className="results">
         <ItemList />

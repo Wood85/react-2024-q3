@@ -8,6 +8,7 @@ import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 
 export interface IFormProps {
   class: string;
+  theme: string;
 }
 
 const SearchForm = (props: Readonly<IFormProps>) => {
@@ -42,12 +43,12 @@ const SearchForm = (props: Readonly<IFormProps>) => {
   return (
     <form
       data-testid="search-form"
-      className={props.class}
+      className={`${props.class} ${props.theme}`}
       onSubmit={handleSubmit}
       onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
     >
-      <Input class="search-input" name="search" value={state.value} handleInputChange={handleChange} />
-      <button type="submit" className="search-button button">
+      <Input class={`search-input ${props.theme}`} name="search" value={state.value} handleInputChange={handleChange} />
+      <button type="submit" className={`search-button ${props.theme} button`}>
         Search
       </button>
       <BuggyButton />

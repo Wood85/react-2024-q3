@@ -1,9 +1,13 @@
 import './FlyoutElement.css';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
+import { ThemeContext } from './../../context/ThemeContext';
 
 const FlyoutElement = () => {
+  const { isDarkTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+
   const selectedArr = useAppSelector((state) => state.selected.selected);
   const dispatch = useAppDispatch();
 
@@ -39,17 +43,17 @@ const FlyoutElement = () => {
   }
 
   return (
-    <div className="flyout">
-      <button className="flyout__unselect button" onClick={removeSelected}>
+    <div className={`flyout ${theme}`}>
+      <button className={`flyout__unselect ${theme} button`} onClick={removeSelected}>
         Unselect all
       </button>
-      <div className="flyout__count">
+      <div className={`flyout__count ${theme}`}>
         {selectedArr.length} {wordItem} are selected
       </div>
       <a
         href={url}
         download={`${selectedArr.length}__characters.csv`}
-        className="flyout__download button"
+        className={`flyout__download ${theme} button`}
         onClick={downloadSelected}
       >
         Download

@@ -1,12 +1,16 @@
 import './Pagination.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
-import { MouseEvent } from 'react';
+import { MouseEvent, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { useGetPageByFullAddressMutation } from './../../services/SWAPI/SWAPI';
 import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
 import { NUM_PER_PAGE } from './../../utils/constants';
+import { ThemeContext } from './../../context/ThemeContext';
 
 const Pagination = () => {
+  const { isDarkTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+
   const count = useAppSelector((state) => state.characters.data.count);
   const prev = useAppSelector((state) => state.characters.data.previous);
   const next = useAppSelector((state) => state.characters.data.next);
@@ -43,7 +47,7 @@ const Pagination = () => {
   }
   return (
     <div className="pagination">
-      <button className="pagination__prev button" onClick={onClickPrev}>
+      <button className={`pagination__prev ${theme} button`} onClick={onClickPrev}>
         {''}
         &lt;&lt; prev
       </button>
@@ -53,7 +57,7 @@ const Pagination = () => {
         ))}
       </div>
       <button
-        className="pagination__next button"
+        className={`pagination__next ${theme} button`}
         onClick={(e) => {
           e.stopPropagation();
           onClickNext();

@@ -1,15 +1,20 @@
 import './Info.css';
+import { useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { showInfo } from './../../store/reducers/infoSlice';
+import { ThemeContext } from './../../context/ThemeContext';
 
 const Info = () => {
+  const { isDarkTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+
   const info = useAppSelector((state) => state.info.data);
   const dispatch = useAppDispatch();
   function hideInfo() {
     dispatch(showInfo(false));
   }
   return (
-    <div className="info">
+    <div className={`info ${theme}`}>
       <h2 className="name field">{info.name}</h2>
       <div className="gender field">gender: {info.gender}</div>
       <div className="birth-year field">birth year: {info.birth_year}</div>
@@ -18,7 +23,7 @@ const Info = () => {
       <div className="hair-color field">hair color: {info.hair_color}</div>
       <div className="skin-color field">skin color: {info.skin_color}</div>
       <div className="eye-color field">eye color: {info.eye_color}</div>
-      <button className="info__button-close" onClick={hideInfo}>
+      <button className={`info__button-close ${theme}`} onClick={hideInfo}>
         Close
       </button>
     </div>

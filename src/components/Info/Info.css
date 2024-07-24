@@ -20,5 +20,17 @@
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-	color: #ffffff;
+	
+}
+
+.info__button-close.theme-dark {
+  color: #ffffff;
+	background: #646c64;
+	transition: all 0.3s;
+}
+
+.info__button-close.theme-light {
+  color: #000000;
+	background: #838883;
+	transition: all 0.3s;
 }
