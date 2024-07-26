@@ -5,7 +5,7 @@ const handleInputChange = vi.fn();
 
 describe('Input', () => {
   test('renders the Input component', () => {
-    render(<Input class="input" value="" handleInputChange={handleInputChange} />);
+    render(<Input class="input" name="search" value="" handleInputChange={handleInputChange} />);
     const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
   });

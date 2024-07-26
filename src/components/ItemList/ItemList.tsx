@@ -10,7 +10,7 @@ const ItemList = () => {
   const isLoading = useAppSelector((state) => state.characters.isLoading);
 
   return (
-    <div className="items">
+    <div className="items" data-testid="item-list">
       {isLoading || count === -1 ? (
         <Spinner />
       ) : count === 0 ? (

@@ -4,7 +4,7 @@ import infoReducer from './reducers/infoSlice';
 import selectedCharacters from './reducers/selectedCharactersSlice';
 import { swApi } from './../services/SWAPI/SWAPI';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     characters: charactersReducer,
     info: infoReducer,

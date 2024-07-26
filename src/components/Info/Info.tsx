@@ -14,7 +14,7 @@ const Info = () => {
     dispatch(showInfo(false));
   }
   return (
-    <div className={`info ${theme}`}>
+    <div className={`info ${theme}`} data-testid="info">
       <h2 className="name field">{info.name}</h2>
       <div className="gender field">gender: {info.gender}</div>
       <div className="birth-year field">birth year: {info.birth_year}</div>

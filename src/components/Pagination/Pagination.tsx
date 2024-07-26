@@ -46,7 +46,7 @@ const Pagination = () => {
     pageNumbers.push(i);
   }
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination">
       <button className={`pagination__prev ${theme} button`} onClick={onClickPrev}>
         {''}
         &lt;&lt; prev

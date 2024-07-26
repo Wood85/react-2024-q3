@@ -26,7 +26,7 @@ const ErrorPage = () => {
     <div className={`error-page ${theme}`} data-testid="error-page">
       <h1>Oops!</h1>
       <p>This is not the page you are looking for</p>
-      <Link to="/" className={`error-page__button ${theme} button`} onClick={getTheme}>
+      <Link data-testid="back" to="/" className={`error-page__button ${theme} button`} onClick={getTheme}>
         Back
       </Link>
     </div>

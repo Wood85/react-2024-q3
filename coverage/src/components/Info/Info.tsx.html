@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>26/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>26/28</span>
             </div>
         
             
@@ -90,15 +90,27 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -118,25 +130,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import './Info.css';
-import { IPeople } from './../../interfaces/interfaces';
+import { useContext } from 'react';
+import { useAppSelector, useAppDispatch } from './../../hooks/redux';
+import { showInfo } from './../../store/reducers/infoSlice';
+import { ThemeContext } from './../../context/ThemeContext';
 &nbsp;
-export interface IInfoProps {
-  info: IPeople;
-  handleCloseClick: () =&gt; void;
-}
+const Info = () =&gt; {
+  const { isDarkTheme } = useContext(ThemeContext);
+  const theme = <span class="branch-0 cbranch-no" title="branch not covered" >isDarkTheme ? 'theme-dark' : '</span>theme-light';
 &nbsp;
-const Info = (props: IInfoProps) =&gt; {
+  const info = useAppSelector((state) =&gt; state.info.data);
+  const dispatch = useAppDispatch();
+<span class="fstat-no" title="function not covered" >  function hideInfo() {</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(showInfo(false));</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
   return (
-    &lt;div className="info"&gt;
-      &lt;h2 className="name field"&gt;{props.info.name}&lt;/h2&gt;
-      &lt;div className="gender field"&gt;gender: {props.info.gender}&lt;/div&gt;
-      &lt;div className="birth-year field"&gt;birth year: {props.info.birth_year}&lt;/div&gt;
-      &lt;div className="height field"&gt;height: {props.info.height}&lt;/div&gt;
-      &lt;div className="mass field"&gt;mass: {props.info.mass}&lt;/div&gt;
-      &lt;div className="hair-color field"&gt;hair color: {props.info.hair_color}&lt;/div&gt;
-      &lt;div className="skin-color field"&gt;skin color: {props.info.skin_color}&lt;/div&gt;
-      &lt;div className="eye-color field"&gt;eye color: {props.info.eye_color}&lt;/div&gt;
-      &lt;button className="info__button-close" onClick={props.handleCloseClick}&gt;
+    &lt;div className={`info ${theme}`} data-testid="info"&gt;
+      &lt;h2 className="name field"&gt;{info.name}&lt;/h2&gt;
+      &lt;div className="gender field"&gt;gender: {info.gender}&lt;/div&gt;
+      &lt;div className="birth-year field"&gt;birth year: {info.birth_year}&lt;/div&gt;
+      &lt;div className="height field"&gt;height: {info.height}&lt;/div&gt;
+      &lt;div className="mass field"&gt;mass: {info.mass}&lt;/div&gt;
+      &lt;div className="hair-color field"&gt;hair color: {info.hair_color}&lt;/div&gt;
+      &lt;div className="skin-color field"&gt;skin color: {info.skin_color}&lt;/div&gt;
+      &lt;div className="eye-color field"&gt;eye color: {info.eye_color}&lt;/div&gt;
+      &lt;button className={`info__button-close ${theme}`} onClick={hideInfo}&gt;
         Close
       &lt;/button&gt;
     &lt;/div&gt;
@@ -151,7 +169,7 @@ export default Info;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-17T17:37:55.090Z
+                at 2024-07-26T15:27:12.334Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

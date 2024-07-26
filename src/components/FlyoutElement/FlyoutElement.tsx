@@ -43,7 +43,7 @@ const FlyoutElement = () => {
   }
 
   return (
-    <div className={`flyout ${theme}`}>
+    <div className={`flyout ${theme}`} data-testid="flyout">
       <button className={`flyout__unselect ${theme} button`} onClick={removeSelected}>
         Unselect all
       </button>

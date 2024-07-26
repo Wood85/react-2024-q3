@@ -10,7 +10,7 @@ export interface IInfoContainerProps {
 
 const InfoContainer = () => {
   return (
-    <div className="info-container">
+    <div className="info-container" data-testid="info-container">
       <Info />
     </div>
   );

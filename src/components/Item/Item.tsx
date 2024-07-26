@@ -55,6 +55,7 @@ const Item = (props: Readonly<IItemProps>) => {
   return (
     <div
       className="item"
+      data-testid="item"
       onClick={(e) => {
         e.stopPropagation();
         handleGetInfo();
