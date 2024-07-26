@@ -8,6 +8,11 @@
 	border-radius: 5px;
 }
 
+.info__img {
+	height: 160px;
+	object-fit: cover;
+}
+
 .info__button-close {
 	margin: auto;
 	background: #646c64;
