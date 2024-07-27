@@ -6,7 +6,9 @@ const SwitchTheme = () => {
   const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
   return (
     <button
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
         toggleTheme();
         if (isDarkTheme) {
           localStorage.setItem('SW_theme', 'light');

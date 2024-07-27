@@ -1,7 +1,7 @@
 import './PageNumber.css';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
-import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 
@@ -22,10 +22,12 @@ const PageNumber = (props: IPageNumberProps) => {
   const [getCharacters] = useGetCharactersMutation();
 
   const getPageWithCharacters = async () => {
+    dispatch(loading(true));
     const req = localStorage.getItem('SW_search_req');
     if (req !== null) {
       const res = await getCharacters({ req, page: num }).unwrap();
       dispatch(setCurrentCharacters(res));
+      dispatch(loading(false));
     }
   };
 
@@ -36,7 +38,8 @@ const PageNumber = (props: IPageNumberProps) => {
       {selectedPage === num ? (
         <div
           className={`pagination__page-number pagination__page-number_active ${theme}`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             selectPage();
             getPageWithCharacters();
           }}
@@ -46,7 +49,8 @@ const PageNumber = (props: IPageNumberProps) => {
       ) : (
         <div
           className={`pagination__page-number ${theme}`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             selectPage();
             getPageWithCharacters();
           }}

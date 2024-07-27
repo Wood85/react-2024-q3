@@ -3,7 +3,7 @@ import './SearchForm.css';
 import BuggyButton from './../../components/BuggyButton/BuggyButton';
 import Input from './../Input/Input';
 import { useAppDispatch } from './../../hooks/redux';
-import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 
 export interface IFormProps {
@@ -29,12 +29,16 @@ const SearchForm = (props: Readonly<IFormProps>) => {
     const formData = new FormData(event.currentTarget);
     const searchReqData = formData.get('search');
     if (typeof searchReqData === 'string') {
+      dispatch(loading(true));
       const res = await getCharacters({ req: searchReqData }).unwrap();
       dispatch(setCurrentCharacters(res));
+      dispatch(loading(false));
       localStorage.setItem('SW_search_req', searchReqData);
     } else {
+      dispatch(loading(true));
       const res = await getCharacters({ req: '' }).unwrap();
       dispatch(setCurrentCharacters(res));
+      dispatch(loading(false));
       localStorage.setItem('SW_search_req', '');
     }
     dispatch(pageNum(1));

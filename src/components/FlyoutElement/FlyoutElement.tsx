@@ -43,7 +43,13 @@ const FlyoutElement = () => {
   }
 
   return (
-    <div className={`flyout ${theme}`} data-testid="flyout">
+    <div
+      className={`flyout ${theme}`}
+      data-testid="flyout"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <button className={`flyout__unselect ${theme} button`} onClick={removeSelected}>
         Unselect all
       </button>

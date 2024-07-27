@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPeople } from './../../interfaces/interfaces';
 import { emptyCharacter } from './../../utils/constants';
 
-const initialState: { data: IPeople; isShow: boolean } = { data: emptyCharacter, isShow: false };
+const initialState: { data: IPeople; isShow: boolean; loadingInfo: boolean } = {
+  data: emptyCharacter,
+  isShow: false,
+  loadingInfo: false,
+};
 
 export const infoSlice = createSlice({
   name: 'info',
@@ -29,9 +33,12 @@ export const infoSlice = createSlice({
     showInfo: (state, action: PayloadAction<boolean>) => {
       state.isShow = action.payload;
     },
+    loadingInfo: (state, action: PayloadAction<boolean>) => {
+      state.loadingInfo = action.payload;
+    },
   },
 });
 
-export const { setCurrentInfo, showInfo } = infoSlice.actions;
+export const { setCurrentInfo, showInfo, loadingInfo } = infoSlice.actions;
 
 export default infoSlice.reducer;

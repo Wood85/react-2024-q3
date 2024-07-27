@@ -23,7 +23,7 @@ const Info = () => {
   };
 
   return (
-    <div className={`info ${theme}`} data-testid="info">
+    <div className={`info ${theme}`} data-testid="info" onClick={(e) => e.stopPropagation()}>
       <h2 className="name field">{info.name}</h2>
       <img src={findImage(info.name)} className="info__img" alt={info.name} />
       <div className="gender field">gender: {info.gender}</div>

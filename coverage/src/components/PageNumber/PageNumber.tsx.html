@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.77% </span>
+                <span class="strong">53.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/45</span>
+                <span class='fraction'>26/49</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.77% </span>
+                <span class="strong">53.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/45</span>
+                <span class='fraction'>26/49</span>
             </div>
         
             
@@ -124,7 +124,11 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -154,6 +158,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,10 +172,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -188,7 +196,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import './PageNumber.css';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
-import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 &nbsp;
@@ -209,10 +217,12 @@ const PageNumber = (props: IPageNumberProps) =&gt; {
   const [getCharacters] = useGetCharactersMutation();
 &nbsp;
   const getPageWithCharacters = <span class="fstat-no" title="function not covered" >async () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(loading(true));</span>
 <span class="cstat-no" title="statement not covered" >    const req = localStorage.getItem('SW_search_req');</span>
 <span class="cstat-no" title="statement not covered" >    if (req !== null) {</span>
 <span class="cstat-no" title="statement not covered" >      const res = await getCharacters({ req, page: num }).unwrap();</span>
 <span class="cstat-no" title="statement not covered" >      dispatch(setCurrentCharacters(res));</span>
+<span class="cstat-no" title="statement not covered" >      dispatch(loading(false));</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
 &nbsp;
@@ -223,7 +233,8 @@ const PageNumber = (props: IPageNumberProps) =&gt; {
       {selectedPage === num ? (
         &lt;div
           className={`pagination__page-number pagination__page-number_active ${theme}`}
-          onClick={<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+          onClick={<span class="fstat-no" title="function not covered" >(e) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            e.stopPropagation();</span>
 <span class="cstat-no" title="statement not covered" >            selectPage();</span>
 <span class="cstat-no" title="statement not covered" >            getPageWithCharacters();</span>
 <span class="cstat-no" title="statement not covered" >          }}</span>
@@ -233,7 +244,8 @@ const PageNumber = (props: IPageNumberProps) =&gt; {
       ) : (
 <span class="cstat-no" title="statement not covered" >        &lt;div</span>
 <span class="cstat-no" title="statement not covered" >          className={`pagination__page-number ${theme}`}</span>
-<span class="cstat-no" title="statement not covered" >          onClick={<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          onClick={<span class="fstat-no" title="function not covered" >(e) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            e.stopPropagation();</span>
 <span class="cstat-no" title="statement not covered" >            selectPage();</span>
 <span class="cstat-no" title="statement not covered" >            getPageWithCharacters();</span>
 <span class="cstat-no" title="statement not covered" >          }}</span>
@@ -253,7 +265,7 @@ export default PageNumber;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-26T19:07:01.375Z
+                at 2024-07-27T09:42:42.371Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

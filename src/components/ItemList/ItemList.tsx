@@ -7,11 +7,11 @@ import Item from './../Item/Item';
 const ItemList = () => {
   const items = useAppSelector((state) => state.characters.data.results);
   const count = useAppSelector((state) => state.characters.data.count);
-  const isLoading = useAppSelector((state) => state.characters.isLoading);
+  const loading = useAppSelector((state) => state.characters.isLoading);
 
   return (
     <div className="items" data-testid="item-list">
-      {isLoading || count === -1 ? (
+      {count === -1 || loading ? (
         <Spinner />
       ) : count === 0 ? (
         <NotFound />

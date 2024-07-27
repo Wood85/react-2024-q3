@@ -1,6 +1,6 @@
 import './Item.css';
 import { useGetInfoMutation } from './../../services/SWAPI/SWAPI';
-import { setCurrentInfo, showInfo } from './../../store/reducers/infoSlice';
+import { setCurrentInfo, showInfo, loadingInfo } from './../../store/reducers/infoSlice';
 import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { IPeople } from 'interfaces/interfaces';
@@ -20,8 +20,11 @@ const Item = (props: Readonly<IItemProps>) => {
   const [getInfo] = useGetInfoMutation();
 
   const handleGetInfo = async () => {
+    dispatch(loadingInfo(true));
+    dispatch(showInfo(true));
     const res = await getInfo(param).unwrap();
     dispatch(setCurrentInfo(res));
+    dispatch(loadingInfo(false));
     dispatch(showInfo(true));
   };
 

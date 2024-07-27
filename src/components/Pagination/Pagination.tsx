@@ -1,9 +1,9 @@
 import './Pagination.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
-import { MouseEvent, useContext } from 'react';
+import { useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { useGetPageByFullAddressMutation } from './../../services/SWAPI/SWAPI';
-import { pageNum, setCurrentCharacters } from './../../store/reducers/charactersSlice';
+import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
 import { NUM_PER_PAGE } from './../../utils/constants';
 import { ThemeContext } from './../../context/ThemeContext';
 
@@ -18,24 +18,27 @@ const Pagination = () => {
   const dispatch = useAppDispatch();
   const [getPage] = useGetPageByFullAddressMutation();
 
-  const onClickPrev = async (event: MouseEvent<HTMLButtonElement>) => {
-    event?.preventDefault();
+  const onClickPrev = async () => {
     if (prev !== null) {
+      dispatch(loading(true));
       const param = prev.slice(22);
       const page = Number(prev.slice(-1));
       const res = await getPage(param).unwrap();
       dispatch(setCurrentCharacters(res));
       dispatch(pageNum(page));
+      dispatch(loading(false));
     }
   };
 
   const onClickNext = async () => {
     if (next !== null) {
+      dispatch(loading(true));
       const param = next.slice(22);
       const page = Number(next.slice(-1));
       const res = await getPage(param).unwrap();
       dispatch(setCurrentCharacters(res));
       dispatch(pageNum(page));
+      dispatch(loading(false));
     }
   };
 
@@ -47,7 +50,14 @@ const Pagination = () => {
   }
   return (
     <div className="pagination" data-testid="pagination">
-      <button className={`pagination__prev ${theme} button`} onClick={onClickPrev}>
+      <button
+        className={`pagination__prev ${theme} button`}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClickPrev();
+        }}
+      >
         {''}
         &lt;&lt; prev
       </button>
@@ -59,6 +69,7 @@ const Pagination = () => {
       <button
         className={`pagination__next ${theme} button`}
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           onClickNext();
         }}

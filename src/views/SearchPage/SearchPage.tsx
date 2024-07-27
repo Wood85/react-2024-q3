@@ -13,6 +13,7 @@ import { setCurrentCharacters } from './../../store/reducers/charactersSlice';
 import FlyoutElement from './../../components/FlyoutElement/FlyoutElement';
 import SwitchTheme from './../../components/SwitchTheme/SwitchTheme';
 import { ThemeContext } from './../../context/ThemeContext';
+import { showInfo } from './../../store/reducers/infoSlice';
 
 const SearchPage: FC = () => {
   const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
@@ -26,8 +27,12 @@ const SearchPage: FC = () => {
     dispatch(setCurrentCharacters(res));
   };
 
+  const closeInfo = () => {
+    dispatch(showInfo(false));
+  };
+
   const count = useAppSelector((state) => state.characters.data.count);
-  const showInfo = useAppSelector((state) => state.info.isShow);
+  const showInfoCard = useAppSelector((state) => state.info.isShow);
   const results = useAppSelector((state) => state.characters.data.results);
   const selectedArr = useAppSelector((state) => state.selected.selected);
 
@@ -51,7 +56,7 @@ const SearchPage: FC = () => {
   const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
 
   return (
-    <div className="search-page" data-testid="search-page">
+    <div className="search-page" data-testid="search-page" onClick={closeInfo}>
       <section className="search">
         <Title theme={theme} />
         <SearchForm theme={theme} class="search-form" />
@@ -59,7 +64,7 @@ const SearchPage: FC = () => {
       </section>
       <section className="results">
         <ItemList />
-        {showInfo ? <InfoContainer /> : ''}
+        {showInfoCard ? <InfoContainer /> : ''}
       </section>
       <section className="pagination__container">
         {count < NUM_PER_PAGE + 1 || results === undefined ? '' : <Pagination />}
