@@ -1,0 +1,29 @@
+.flag {
+	width: 90px;
+	height: 20px;
+	background-color: #646c64;;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border-radius: 3px;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flag_hide {
+	display: none;
+}
+
+.flag.theme-dark {
+  color: #ffffff;
+	font-weight: 400;
+	transition: all 0.3s;
+}
+
+.flag.theme-light {
+	color: #000000;
+	font-weight: 600;
+	transition: all 0.3s;
+}

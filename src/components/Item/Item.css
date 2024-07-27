@@ -1,0 +1,30 @@
+.item {
+  display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: #646cffaa;
+	width: 210px;
+	height: 150px;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	position: relative;
+}
+.name {
+	margin: 0;
+}
+
+.checkbox {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 90px;
+	height: 20px;
+	border-radius: 3px;
+	border: 2px solid #646c64;
+	color: #646c64;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 600;
+}

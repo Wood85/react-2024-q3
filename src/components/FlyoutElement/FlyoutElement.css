@@ -1,0 +1,51 @@
+.flyout {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 400px;
+	height: 50px;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.flyout.theme-dark {
+	background-color: #000000;
+	transition: all 0.3s;
+}
+
+.flyout.theme-light {
+  background-color: #838883;
+	transition: all 0.3s;
+}
+
+.flyout__unselect,
+.flyout__download {
+	width: 100px;
+	height: 30px;
+	text-decoration: none;
+}
+
+.flyout__unselect.theme-dark,
+.flyout__download.theme-dark {
+	color: #ffffff;
+	transition: all 0.3s;
+}
+
+.flyout__unselect.theme-light,
+.flyout__download.theme-light {
+	color: #000000;
+	background-color: #007dffa3;
+	transition: all 0.3s;
+}
+
+.flyout__count.theme-dark {
+  background-color: #000000;
+	font-weight: 400;
+	transition: all 0.3s;
+}
+
+.flyout__count.theme-light {
+  background-color: #838883;
+	font-weight: 600;
+	transition: all 0.3s;
+}

@@ -1,0 +1,86 @@
+import './Item.css';
+import { useGetInfoMutation } from './../../services/SWAPI/SWAPI';
+import { setCurrentInfo, showInfo, loadingInfo } from './../../store/reducers/infoSlice';
+import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
+import { useAppSelector, useAppDispatch } from './../../hooks/redux';
+import { IPeople } from 'interfaces/interfaces';
+import SelectFlag from './../../components/SelectFlag/SelectFlag';
+
+export interface IItemProps {
+  name: string;
+  gender: string;
+  url: string;
+}
+
+const Item = (props: Readonly<IItemProps>) => {
+  const param = props.url.slice(22);
+  const dispatch = useAppDispatch();
+  const selectedArr = useAppSelector((state) => state.selected.selected);
+
+  const [getInfo] = useGetInfoMutation();
+
+  const handleGetInfo = async () => {
+    dispatch(loadingInfo(true));
+    dispatch(showInfo(true));
+    const res = await getInfo(param).unwrap();
+    dispatch(setCurrentInfo(res));
+    dispatch(loadingInfo(false));
+    dispatch(showInfo(true));
+  };
+
+  const pushSelectedCharacter = async (arr: IPeople[]) => {
+    const res = await getInfo(param).unwrap();
+    arr.push(res);
+    dispatch(arrOfSelected(arr));
+  };
+
+  function handleChange(url: string) {
+    const arr = [...selectedArr];
+    let index = -1;
+
+    if (arr.length > 0) {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].url === url) {
+          index = i;
+        }
+      }
+    }
+
+    if (index === -1) {
+      pushSelectedCharacter(arr);
+    }
+    if (index !== undefined && index > -1) {
+      arr.splice(index, 1);
+      dispatch(arrOfSelected(arr));
+    }
+  }
+
+  return (
+    <div
+      className="item"
+      data-testid="item"
+      onClick={(e) => {
+        e.stopPropagation();
+        handleGetInfo();
+      }}
+    >
+      <h2 className="name field">{props.name}</h2>
+      <div className="gender field">gender: {props.gender}</div>
+      <SelectFlag name={props.name} />
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <div
+          className="checkbox"
+          onClick={() => {
+            handleChange(props.url);
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+};
+
+export default Item;
