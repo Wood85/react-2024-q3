@@ -1,12 +1,13 @@
+'use client';
 import { useState, useContext } from 'react';
-import './BuggyButton.css';
+import styles from './BuggyButton.module.css';
 import { ThemeContext } from './../../context/ThemeContext';
 
 const BuggyButton = () => {
   const [count, setCount] = useState(0);
 
   const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   const handleClick = () => {
     setCount(count + 1);
@@ -17,7 +18,7 @@ const BuggyButton = () => {
   }
 
   return (
-    <button className={`buggy-button ${theme} button`} onClick={handleClick}>
+    <button className={`${styles.button} ${theme} button`} onClick={handleClick}>
       Call Error
     </button>
   );

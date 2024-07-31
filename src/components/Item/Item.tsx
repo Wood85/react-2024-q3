@@ -1,9 +1,10 @@
-import './Item.css';
+'use client';
+import styles from './Item.module.css';
 import { useGetInfoMutation } from './../../services/SWAPI/SWAPI';
 import { setCurrentInfo, showInfo, loadingInfo } from './../../store/reducers/infoSlice';
 import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
-import { IPeople } from 'interfaces/interfaces';
+import { IPeople } from './../../interfaces/interfaces';
 import SelectFlag from './../../components/SelectFlag/SelectFlag';
 
 export interface IItemProps {
@@ -57,15 +58,15 @@ const Item = (props: Readonly<IItemProps>) => {
 
   return (
     <div
-      className="item"
+      className={styles.item}
       data-testid="item"
       onClick={(e) => {
         e.stopPropagation();
         handleGetInfo();
       }}
     >
-      <h2 className="name field">{props.name}</h2>
-      <div className="gender field">gender: {props.gender}</div>
+      <h2 className={`${styles.name} ${styles.field}`}>{props.name}</h2>
+      <div className={`${styles.gender} ${styles.field}`}>gender: {props.gender}</div>
       <SelectFlag name={props.name} />
       <div
         onClick={(e) => {
@@ -73,7 +74,7 @@ const Item = (props: Readonly<IItemProps>) => {
         }}
       >
         <div
-          className="checkbox"
+          className={styles.checkbox}
           onClick={() => {
             handleChange(props.url);
           }}

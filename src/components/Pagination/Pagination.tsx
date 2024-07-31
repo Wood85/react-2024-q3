@@ -1,4 +1,5 @@
-import './Pagination.css';
+'use client';
+import styles from './Pagination.module.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
 import { useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
@@ -9,7 +10,7 @@ import { ThemeContext } from './../../context/ThemeContext';
 
 const Pagination = () => {
   const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   const count = useAppSelector((state) => state.characters.data.count);
   const prev = useAppSelector((state) => state.characters.data.previous);
@@ -49,9 +50,9 @@ const Pagination = () => {
     pageNumbers.push(i);
   }
   return (
-    <div className="pagination" data-testid="pagination">
+    <div className={styles.pagination} data-testid="pagination">
       <button
-        className={`pagination__prev ${theme} button`}
+        className={`${styles.prev} ${theme} button`}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -61,13 +62,13 @@ const Pagination = () => {
         {''}
         &lt;&lt; prev
       </button>
-      <div className="pagination__page-numbers">
+      <div className={styles.pageNumbers}>
         {pageNumbers.map((item: number) => (
           <PageNumber key={crypto.randomUUID()} num={item} />
         ))}
       </div>
       <button
-        className={`pagination__next ${theme} button`}
+        className={`${styles.next} ${theme} button`}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();

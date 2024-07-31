@@ -1,4 +1,5 @@
-import './Fallback.css';
+'use client';
+import styles from './Fallback.module.css';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 
@@ -8,9 +9,9 @@ interface IFallbackProps {
 
 const Fallback = (props: IFallbackProps) => {
   const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
-  return <div className={`fallback ${theme}`}>{props.message}</div>;
+  return <div className={`${styles.fallback} ${theme}`}>{props.message}</div>;
 };
 
 export default Fallback;

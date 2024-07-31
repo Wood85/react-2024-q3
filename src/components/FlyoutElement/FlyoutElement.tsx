@@ -1,4 +1,5 @@
-import './FlyoutElement.css';
+'use client';
+import styles from './FlyoutElement.module.css';
 import { MouseEvent, useState, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
@@ -6,7 +7,7 @@ import { ThemeContext } from './../../context/ThemeContext';
 
 const FlyoutElement = () => {
   const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   const selectedArr = useAppSelector((state) => state.selected.selected);
   const dispatch = useAppDispatch();
@@ -44,22 +45,22 @@ const FlyoutElement = () => {
 
   return (
     <div
-      className={`flyout ${theme}`}
-      data-testid="flyout"
+      className={`${styles.flyout} ${theme}`}
+      data-testid={styles.flyout}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      <button className={`flyout__unselect ${theme} button`} onClick={removeSelected}>
+      <button className={`${styles.unselect} ${theme} button`} onClick={removeSelected}>
         Unselect all
       </button>
-      <div className={`flyout__count ${theme}`}>
+      <div className={`${styles.count} ${theme}`}>
         {selectedArr.length} {wordItem} are selected
       </div>
       <a
         href={url}
         download={`${selectedArr.length}__characters.csv`}
-        className={`flyout__download ${theme} button`}
+        className={`${styles.download} ${theme} button`}
         onClick={downloadSelected}
       >
         Download

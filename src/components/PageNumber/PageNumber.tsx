@@ -1,4 +1,5 @@
-import './PageNumber.css';
+'use client';
+import styles from './PageNumber.module.css';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
 import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
@@ -10,7 +11,7 @@ export interface IPageNumberProps {
 }
 const PageNumber = (props: IPageNumberProps) => {
   const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   const { num } = props;
   const dispatch = useAppDispatch();
@@ -37,7 +38,7 @@ const PageNumber = (props: IPageNumberProps) => {
     <>
       {selectedPage === num ? (
         <div
-          className={`pagination__page-number pagination__page-number_active ${theme}`}
+          className={`${styles.pageNumber} ${styles.pageNumberActive} ${theme}`}
           onClick={(e) => {
             e.stopPropagation();
             selectPage();
@@ -48,7 +49,7 @@ const PageNumber = (props: IPageNumberProps) => {
         </div>
       ) : (
         <div
-          className={`pagination__page-number ${theme}`}
+          className={`${styles.pageNumber} ${theme}`}
           onClick={(e) => {
             e.stopPropagation();
             selectPage();

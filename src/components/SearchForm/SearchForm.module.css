@@ -1,0 +1,41 @@
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 300px;
+}
+
+.button {
+  width: 90px;
+  height: 30px;
+}
+
+.button.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.button.lightTheme {
+  color: #000000;
+  transition: all 0.3s;
+}
+
+.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.lightTheme {
+  transition: all 0.3s;
+  color: #000000;
+}
+
+@media screen and (max-width: 420px) {
+  .form {
+    flex-direction: column;
+    width: 210px;
+    gap: 10px;
+    align-items: end;
+  }
+}

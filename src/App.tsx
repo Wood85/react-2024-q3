@@ -1,15 +1,19 @@
-import { FC, useEffect, useContext } from 'react';
-import './App.css';
+'use client';
+import styles from './App.module.css';
 import SearchPage from './views/SearchPage/SearchPage';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ErrorPage from './views/ErrorPage/ErrorPage';
+// import store from './store/store.ts';
+// import ThemeProvider from './context/ThemeContext.tsx';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import { FC, useEffect, useContext } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 import { useGetCharactersMutation } from './services/SWAPI/SWAPI';
 import { useAppDispatch } from './hooks/redux';
 import { setCurrentCharacters } from './store/reducers/charactersSlice';
+// import { Provider } from 'react-redux';
 
 const App: FC = () => {
   const { isDarkTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   const dispatch = useAppDispatch();
   const [getCharacters] = useGetCharactersMutation();
@@ -24,14 +28,10 @@ const App: FC = () => {
   }, []);
 
   return (
-    <div className={isDarkTheme ? 'app theme-dark' : 'app theme-light'} data-testid="app">
-      <Router>
-        <Routes>
-          <Route path="/" element={<SearchPage />}></Route>
-          <Route path="/search/:page" element={<SearchPage />}></Route>
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Router>
+    <div className={`${styles.app} ${theme}`} data-testid="app">
+      <ErrorBoundary>
+        <SearchPage />
+      </ErrorBoundary>
     </div>
   );
 };

@@ -1,9 +1,11 @@
-import './SwitchTheme.css';
+'use client';
+import styles from './SwitchTheme.module.css';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 
 const SwitchTheme = () => {
   const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
   return (
     <button
       onClick={(e) => {
@@ -16,7 +18,7 @@ const SwitchTheme = () => {
           localStorage.setItem('SW_theme', 'dark');
         }
       }}
-      className={`theme-button ${isDarkTheme ? 'theme-button_dark' : 'theme-button_light'}`}
+      className={`${styles.button} ${theme}`}
     ></button>
   );
 };

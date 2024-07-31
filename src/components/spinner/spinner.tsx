@@ -1,4 +1,6 @@
+'use client';
 import { Oval } from 'react-loader-spinner';
+import styles from './spinner.module.css';
 
 const Spinner = () => {
   return (
@@ -10,7 +12,7 @@ const Spinner = () => {
       wrapperStyle={{
         justifyContent: 'center',
       }}
-      wrapperClass="spinner-wrapper"
+      wrapperClass={styles.wrapper}
     />
   );
 };

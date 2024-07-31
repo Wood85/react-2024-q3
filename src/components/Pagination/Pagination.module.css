@@ -1,0 +1,35 @@
+.pagination {
+  margin-top: 50px;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  gap: 5px;
+}
+
+.prev {
+  padding-bottom: 5px;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.next {
+  padding-bottom: 5px;
+}
+
+.prev.darkTheme,
+.next.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.prev.lightTheme,
+.next.lightTheme {
+  color: #000000;
+  transition: all 0.3s;
+}

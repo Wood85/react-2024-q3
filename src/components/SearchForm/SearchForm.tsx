@@ -1,22 +1,24 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
-import './SearchForm.css';
-import BuggyButton from './../../components/BuggyButton/BuggyButton';
+'use client';
+import { ChangeEvent, FormEvent, MouseEvent, useState, useContext, useEffect } from 'react';
+import styles from './SearchForm.module.css';
 import Input from './../Input/Input';
 import { useAppDispatch } from './../../hooks/redux';
 import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
 import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
+import { ThemeContext } from './../../context/ThemeContext';
 
-export interface IFormProps {
-  class: string;
-  theme: string;
-}
+const SearchForm = () => {
+  const { isDarkTheme } = useContext(ThemeContext);
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
-const SearchForm = (props: Readonly<IFormProps>) => {
-  const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
+  const [state, setState] = useState({ value: '' });
+
+  useEffect(() => {
+    const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
+    setState(searchReq);
+  }, []);
 
   const dispatch = useAppDispatch();
-
-  const [state, setState] = useState(searchReq);
 
   const [getCharacters] = useGetCharactersMutation();
 
@@ -47,15 +49,14 @@ const SearchForm = (props: Readonly<IFormProps>) => {
   return (
     <form
       data-testid="search-form"
-      className={`${props.class} ${props.theme}`}
+      className={`${styles.form} ${theme}`}
       onSubmit={handleSubmit}
       onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
     >
-      <Input class={`search-input ${props.theme}`} name="search" value={state.value} handleInputChange={handleChange} />
-      <button type="submit" className={`search-button ${props.theme} button`}>
+      <Input name="search" value={state.value} handleInputChange={handleChange} />
+      <button type="submit" className={`${styles.button} ${theme} button`}>
         Search
       </button>
-      <BuggyButton />
     </form>
   );
 };

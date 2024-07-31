@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.container.darkTheme .logo {
+  width: 120px;
+  height: 120px;
+  background-image: url('./../../assets/star-wars-white.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.3s;
+}
+
+.container.lightTheme .logo {
+  width: 120px;
+  height: 120px;
+  background-image: url('./../../assets/star-wars-black.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.3s;
+}
+
+.text {
+  font-size: 26px;
+  margin: 0;
+}
+
+.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.lightTheme {
+  transition: all 0.3s;
+  color: #000000;
+}

@@ -1,4 +1,5 @@
-import './SearchPage.css';
+'use client';
+import styles from './SearchPage.module.css';
 import SearchForm from './../../components/SearchForm/SearchForm';
 import { useAppDispatch } from './../../hooks/redux';
 import { NUM_PER_PAGE } from './../../utils/constants';
@@ -53,23 +54,21 @@ const SearchPage: FC = () => {
     }
   }, []);
 
-  const theme = isDarkTheme ? 'theme-dark' : 'theme-light';
+  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
   return (
-    <div className="search-page" data-testid="search-page" onClick={closeInfo}>
-      <section className="search">
-        <Title theme={theme} />
-        <SearchForm theme={theme} class="search-form" />
+    <div className={`${styles.page} ${theme}`} data-testid="search-page" onClick={closeInfo}>
+      <section className={styles.search}>
+        <Title />
+        <SearchForm />
         <SwitchTheme />
       </section>
-      <section className="results">
+      <section className={styles.results}>
         <ItemList />
         {showInfoCard ? <InfoContainer /> : ''}
       </section>
-      <section className="pagination__container">
-        {count < NUM_PER_PAGE + 1 || results === undefined ? '' : <Pagination />}
-      </section>
-      <section className="flyout-container">{selectedArr.length > 0 ? <FlyoutElement /> : ''}</section>
+      <section>{count < NUM_PER_PAGE + 1 || results === undefined ? '' : <Pagination />}</section>
+      <section className={styles.flyoutContainer}>{selectedArr.length > 0 ? <FlyoutElement /> : ''}</section>
     </div>
   );
 };

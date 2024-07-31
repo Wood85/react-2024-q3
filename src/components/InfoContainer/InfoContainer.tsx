@@ -1,4 +1,5 @@
-import './InfoContainer.css';
+'use client';
+import styles from './InfoContainer.module.css';
 import Info from './../Info/Info';
 import { IPeople } from './../../interfaces/interfaces';
 import { useAppSelector } from './../../hooks/redux';
@@ -14,7 +15,7 @@ const InfoContainer = () => {
   const isLoading = useAppSelector((state) => state.info.loadingInfo);
 
   return (
-    <div className="info-container" data-testid="info-container">
+    <div className={styles.container} data-testid="info-container">
       {isLoading ? <Spinner /> : <Info />}
     </div>
   );

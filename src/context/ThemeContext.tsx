@@ -1,3 +1,4 @@
+'use client';
 import { ReactNode, createContext, useState } from 'react';
 
 export const ThemeContext = createContext<{ isDarkTheme: boolean; toggleTheme: () => void }>({
