@@ -7,6 +7,7 @@ const SwitchTheme = () => {
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
   return (
     <button
+      data-testid="switch"
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();

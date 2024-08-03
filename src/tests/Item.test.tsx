@@ -1,9 +1,23 @@
 import { render, screen, act, within } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import Item from './../components/Item/Item';
 import { Provider } from 'react-redux';
 import storeMock, { character } from './mockStore';
 import { arrOfSelected } from './../store/reducers/selectedCharactersSlice';
 import { store } from './../store/store';
+
+vi.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: () => null,
+    };
+  },
+  useSearchParams() {
+    return {
+      get: () => null,
+    };
+  },
+}));
 
 describe('Item', () => {
   test('renders the Item component', () => {

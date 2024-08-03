@@ -45,7 +45,7 @@ const FlyoutElement = () => {
   return (
     <div
       className={`${styles.flyout} ${theme}`}
-      data-testid={styles.flyout}
+      data-testid="flyout"
       onClick={(e) => {
         e.stopPropagation();
       }}

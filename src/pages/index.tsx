@@ -12,6 +12,7 @@ export default function Page() {
           <link rel="icon" type="image/png" href="/yoda.png" />
           <title>SW Search</title>
         </Head>
+        <h1>Home</h1>
         <App />
       </ThemeProvider>
     </Provider>
