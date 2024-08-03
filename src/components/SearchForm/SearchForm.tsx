@@ -1,49 +1,32 @@
-'use client';
-import { ChangeEvent, FormEvent, MouseEvent, useState, useContext, useEffect } from 'react';
 import styles from './SearchForm.module.css';
-import Input from './../Input/Input';
-import { useAppDispatch } from './../../hooks/redux';
-import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
-import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
+import { useRouter } from 'next/navigation';
+import { FormEvent, MouseEvent, useState, useContext, useEffect } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
+import { useSearchParams } from 'next/navigation';
 
 const SearchForm = () => {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
-  const [state, setState] = useState({ value: '' });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const router = useRouter();
+
+  const search = useSearchParams();
+
+  const query = search ? search.get('search') : null;
+
+  const encodedSearchQuery = encodeURI(query || '');
 
   useEffect(() => {
-    const searchReq = { value: localStorage.getItem('SW_search_req') || '' };
-    setState(searchReq);
-  }, []);
+    setSearchQuery(encodedSearchQuery);
+  }, [search]);
 
-  const dispatch = useAppDispatch();
-
-  const [getCharacters] = useGetCharactersMutation();
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setState({ value: event.target.value });
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const searchReqData = formData.get('search');
-    if (typeof searchReqData === 'string') {
-      dispatch(loading(true));
-      const res = await getCharacters({ req: searchReqData }).unwrap();
-      dispatch(setCurrentCharacters(res));
-      dispatch(loading(false));
-      localStorage.setItem('SW_search_req', searchReqData);
-    } else {
-      dispatch(loading(true));
-      const res = await getCharacters({ req: '' }).unwrap();
-      dispatch(setCurrentCharacters(res));
-      dispatch(loading(false));
-      localStorage.setItem('SW_search_req', '');
-    }
-    dispatch(pageNum(1));
+    const encodedSearchQuery = encodeURI(searchQuery);
+    router.push(`?search=${encodedSearchQuery}&page=1`);
+    localStorage.setItem('SW_search_req', searchQuery);
   }
 
   return (
@@ -53,7 +36,14 @@ const SearchForm = () => {
       onSubmit={handleSubmit}
       onClick={(e: MouseEvent<HTMLFormElement>) => e.stopPropagation()}
     >
-      <Input name="search" value={state.value} handleInputChange={handleChange} />
+      <input
+        data-testid="input"
+        type="text"
+        name="search"
+        className={`${styles.input} ${theme}`}
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
+      />
       <button type="submit" className={`${styles.button} ${theme} button`}>
         Search
       </button>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { IPeople, IResponse } from 'interfaces/interfaces';
+import { IPeople, IResponse } from './../../interfaces/interfaces';
 
 export interface ISearchQuery {
   req: string;

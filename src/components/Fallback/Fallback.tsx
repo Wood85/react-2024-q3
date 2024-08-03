@@ -1,4 +1,3 @@
-'use client';
 import styles from './Fallback.module.css';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';

@@ -1,4 +1,3 @@
-'use client';
 import { useState, useContext } from 'react';
 import styles from './BuggyButton.module.css';
 import { ThemeContext } from './../../context/ThemeContext';

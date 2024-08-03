@@ -1,4 +1,3 @@
-'use client';
 import styles from './SwitchTheme.module.css';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';

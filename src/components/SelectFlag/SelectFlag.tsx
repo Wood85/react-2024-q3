@@ -1,4 +1,3 @@
-'use client';
 import styles from './SelectFlag.module.css';
 import { useAppSelector } from './../../hooks/redux';
 import { useContext } from 'react';

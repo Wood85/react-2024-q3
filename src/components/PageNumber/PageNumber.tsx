@@ -1,10 +1,9 @@
-'use client';
 import styles from './PageNumber.module.css';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
-import { useGetCharactersMutation } from './../../services/SWAPI/SWAPI';
-import { pageNum, setCurrentCharacters, loading } from './../../store/reducers/charactersSlice';
+import { pageNum } from './../../store/reducers/charactersSlice';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export interface IPageNumberProps {
   num: number;
@@ -16,19 +15,25 @@ const PageNumber = (props: IPageNumberProps) => {
   const { num } = props;
   const dispatch = useAppDispatch();
 
+  const search = useSearchParams();
+
+  const query = search ? search.get('search') : null;
+
+  const encodedSearchQuery = encodeURI(query || '');
+
+  const detailsQuery = search.get('details') ? search.get('details') : null;
+
+  const { push } = useRouter();
+
   function selectPage() {
     dispatch(pageNum(num));
   }
 
-  const [getCharacters] = useGetCharactersMutation();
-
-  const getPageWithCharacters = async () => {
-    dispatch(loading(true));
-    const req = localStorage.getItem('SW_search_req');
-    if (req !== null) {
-      const res = await getCharacters({ req, page: num }).unwrap();
-      dispatch(setCurrentCharacters(res));
-      dispatch(loading(false));
+  const getPageWithCharacters = () => {
+    if (detailsQuery !== null) {
+      push(`?search=${encodedSearchQuery}&page=${num}&details=${detailsQuery}`);
+    } else {
+      push(`?search=${encodedSearchQuery}&page=${num}`);
     }
   };
 

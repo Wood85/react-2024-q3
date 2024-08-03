@@ -1,4 +1,4 @@
-import { IPeople, IResponse } from 'interfaces/interfaces';
+import { IPeople, IResponse } from './../interfaces/interfaces';
 
 export const emptyValue: IPeople[] | undefined = [
   {

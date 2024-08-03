@@ -1,4 +1,3 @@
-'use client';
 import { Oval } from 'react-loader-spinner';
 import styles from './spinner.module.css';
 

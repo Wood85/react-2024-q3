@@ -1,4 +1,3 @@
-'use client';
 import styles from './InfoContainer.module.css';
 import Info from './../Info/Info';
 import { IPeople } from './../../interfaces/interfaces';

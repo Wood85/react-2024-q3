@@ -1,29 +1,35 @@
-'use client';
 import styles from './App.module.css';
 import SearchPage from './views/SearchPage/SearchPage';
-// import store from './store/store.ts';
-// import ThemeProvider from './context/ThemeContext.tsx';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import { FC, useEffect, useContext } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { ThemeContext } from './context/ThemeContext';
-import { useGetCharactersMutation } from './services/SWAPI/SWAPI';
-import { useAppDispatch } from './hooks/redux';
-import { setCurrentCharacters } from './store/reducers/charactersSlice';
-// import { Provider } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 const App: FC = () => {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
-  const dispatch = useAppDispatch();
-  const [getCharacters] = useGetCharactersMutation();
+  const { push } = useRouter();
+
+  const search = useSearchParams();
+
+  const searchQuery = search.get('search') ? search.get('search') : null;
+
+  const encodedSearchQuery = encodeURI(searchQuery || '');
+
   useEffect(() => {
-    if (!localStorage.getItem('SW_search_req')) {
-      localStorage.setItem('SW_search_req', '');
-      (async () => {
-        const res = await getCharacters({ req: '' }).unwrap();
-        dispatch(setCurrentCharacters(res));
-      })();
+    if (encodedSearchQuery === '') {
+      if (!localStorage.getItem('SW_search_req')) {
+        localStorage.setItem('SW_search_req', '');
+        push(`?search=${encodedSearchQuery}&page=1`);
+      }
+      if (localStorage.getItem('SW_search_req')) {
+        const lSValue = localStorage.getItem('SW_search_req');
+        if (lSValue !== null) {
+          push(`?search=${lSValue}&page=1`);
+        }
+      }
     }
   }, []);
 

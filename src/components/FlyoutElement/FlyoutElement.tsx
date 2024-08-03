@@ -1,4 +1,3 @@
-'use client';
 import styles from './FlyoutElement.module.css';
 import { MouseEvent, useState, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';

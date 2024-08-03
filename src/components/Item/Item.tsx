@@ -1,7 +1,7 @@
-'use client';
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import styles from './Item.module.css';
 import { useGetInfoMutation } from './../../services/SWAPI/SWAPI';
-import { setCurrentInfo, showInfo, loadingInfo } from './../../store/reducers/infoSlice';
 import { arrOfSelected } from './../../store/reducers/selectedCharactersSlice';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
 import { IPeople } from './../../interfaces/interfaces';
@@ -15,18 +15,20 @@ export interface IItemProps {
 
 const Item = (props: Readonly<IItemProps>) => {
   const param = props.url.slice(22);
+  const details = props.url.slice(29, -1);
   const dispatch = useAppDispatch();
   const selectedArr = useAppSelector((state) => state.selected.selected);
+  const router = useRouter();
+
+  const search = useSearchParams();
+  const searchQuery = search.get('search') ? search.get('search') : null;
+  const pageQuery = search.get('page') ? search.get('page') : null;
+  const encodedSearchQuery = encodeURI(searchQuery || '');
 
   const [getInfo] = useGetInfoMutation();
 
   const handleGetInfo = async () => {
-    dispatch(loadingInfo(true));
-    dispatch(showInfo(true));
-    const res = await getInfo(param).unwrap();
-    dispatch(setCurrentInfo(res));
-    dispatch(loadingInfo(false));
-    dispatch(showInfo(true));
+    router.push(`?search=${encodedSearchQuery}&page=${pageQuery}&details=${details}`);
   };
 
   const pushSelectedCharacter = async (arr: IPeople[]) => {

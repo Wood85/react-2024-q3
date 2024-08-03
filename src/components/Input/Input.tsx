@@ -1,6 +1,5 @@
-'use client';
 import styles from './Input.module.css';
-import { ChangeEvent, useContext } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 
 interface IInputProps {
@@ -13,14 +12,16 @@ const Input = (props: IInputProps) => {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
     <input
       data-testid="input"
       type="text"
       name={props.name}
       className={`${styles.input} ${theme}`}
-      value={props.value}
-      onChange={props.handleInputChange}
+      value={searchQuery}
+      onChange={(event) => setSearchQuery(event.target.value)}
     />
   );
 };
