@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, MouseEvent, useState, useContext, useEffect } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 import { useSearchParams } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const SearchForm = () => {
   const { isDarkTheme } = useContext(ThemeContext);
@@ -26,7 +27,7 @@ const SearchForm = () => {
     event.preventDefault();
     const encodedSearchQuery = encodeURI(searchQuery);
     router.push(`?search=${encodedSearchQuery}&page=1`);
-    localStorage.setItem('SW_search_req', searchQuery);
+    Cookies.set('search', encodedSearchQuery, { expires: 7 });
   }
 
   return (

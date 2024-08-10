@@ -1,12 +1,10 @@
 import styles from './Pagination.module.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
 import { useContext } from 'react';
-import { useAppSelector } from './../../hooks/redux';
-import { NUM_PER_PAGE } from './../../utils/constants';
 import { ThemeContext } from './../../context/ThemeContext';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-const Pagination = () => {
+const Pagination = (props: { pageNum: number }) => {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
@@ -16,8 +14,6 @@ const Pagination = () => {
   const encodedSearchQuery = encodeURI(searchQuery || '');
   const detailsQuery = search.get('details') ? search.get('details') : null;
   const { push } = useRouter();
-
-  const count = useAppSelector((state) => state.characters.data.count);
 
   const onClickPrev = () => {
     if (pageQuery !== null && Number(pageQuery) > 1) {
@@ -39,10 +35,8 @@ const Pagination = () => {
     }
   };
 
-  const countPage = Math.ceil(count / NUM_PER_PAGE);
-
   const pageNumbers: number[] = [];
-  for (let i = 1; i <= countPage; i++) {
+  for (let i = 1; i <= props.pageNum; i++) {
     pageNumbers.push(i);
   }
   return (

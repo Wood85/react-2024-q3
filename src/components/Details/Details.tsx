@@ -1,24 +1,16 @@
-import styles from './Info.module.css';
-import { useContext } from 'react';
-import { ThemeContext } from './../../context/ThemeContext';
+import styles from './Details.module.css';
+import { IPeople } from './../../interfaces/interfaces.ts';
 import images from './../../data/images';
 import Image, { StaticImageData } from 'next/image';
-import useDetails from '../../hooks/useDetails';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const Info = () => {
-  const { isDarkTheme } = useContext(ThemeContext);
-  const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
-
+export default function Details({ info }: { info: IPeople }) {
   const { push } = useRouter();
 
   const search = useSearchParams();
   const searchQuery = search.get('search') ? search.get('search') : null;
   const pageQuery = search.get('page') ? search.get('page') : null;
   const encodedSearchQuery = encodeURI(searchQuery || '');
-  const detailsQuery = search.get('details') ? search.get('details') : null;
-  const { info } = useDetails(Number(detailsQuery));
 
   function hideInfo() {
     push(`?search=${encodedSearchQuery}&page=${Number(pageQuery)}`);
@@ -37,7 +29,7 @@ const Info = () => {
   }
 
   return (
-    <div className={`${styles.info} ${theme}`} data-testid="info" onClick={(e) => e.stopPropagation()}>
+    <div className={`${styles.info}`} data-testid="info" onClick={(e) => e.stopPropagation()}>
       <h2 className={styles.name}>{info !== undefined ? info.name : ''}</h2>
       {info !== undefined ? (
         <Image
@@ -63,11 +55,9 @@ const Info = () => {
         skin color: {info !== undefined ? info.skin_color : ''}
       </div>
       <div className={`${styles.eyeColor} ${styles.field}`}>eye color: {info !== undefined ? info.eye_color : ''}</div>
-      <button className={`${styles.buttonClose} ${theme}`} onClick={hideInfo}>
+      <button className={`${styles.buttonClose}`} onClick={hideInfo}>
         Close
       </button>
     </div>
   );
-};
-
-export default Info;
+}

@@ -1,5 +1,5 @@
 .flyout {
-  display: flex;
+	display: flex;
   justify-content: space-around;
   align-items: center;
   width: 400px;
@@ -7,6 +7,15 @@
   border-radius: 5px;
   text-decoration: none;
 }
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: flex;
+}
+
 
 .flyout.darkTheme {
   background-color: #000000;

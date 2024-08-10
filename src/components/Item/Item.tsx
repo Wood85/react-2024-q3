@@ -28,7 +28,7 @@ const Item = (props: Readonly<IItemProps>) => {
   const [getInfo] = useGetInfoMutation();
 
   const handleGetInfo = async () => {
-    router.push(`?search=${encodedSearchQuery}&page=${pageQuery}&details=${details}`);
+    router.push(`?search=${encodedSearchQuery || ''}&page=${pageQuery || '1'}&details=${details}`);
   };
 
   const pushSelectedCharacter = async (arr: IPeople[]) => {

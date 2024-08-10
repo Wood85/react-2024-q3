@@ -1,0 +1,38 @@
+.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px 30px 20px;
+  gap: 30px;
+}
+
+.search.darkTheme {
+  background-color: #242424;
+  transition: all 0.3s;
+}
+
+.search.lightTheme {
+  background-color: #ffffff;
+  transition: all 0.3s;
+}
+
+.main {
+	padding: 0 20px;
+}
+
+.main.darkTheme {
+  background-color: #242424;
+  transition: all 0.3s;
+}
+
+.main.lightTheme {
+  background-color: #ffffff;
+  transition: all 0.3s;
+}
+
+@media screen and (max-width: 880px) {
+  .search {
+    flex-direction: column;
+  }
+}

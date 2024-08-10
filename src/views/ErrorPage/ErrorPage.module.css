@@ -7,15 +7,17 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+	background-color: #686868;
+	height: 100dvh;
 }
 
 .page.darkTheme {
-  background-color: #242424;
+  background-color: #686868;
   transition: all 0.3s;
 }
 
 .page.themeLight {
-  background-color: #ffffff;
+  background-color: #686868;
   transition: all 0.3s;
 }
 

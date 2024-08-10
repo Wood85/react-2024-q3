@@ -11,9 +11,6 @@ div#__next {
   line-height: 1.5;
   font-weight: 400;
 
-  /* color: rgba(255, 255, 255, 0.87); */
-  /* background-color: #242424; */
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -44,4 +41,65 @@ h1 {
   cursor: pointer;
   transition: border-color 0.25s;
   color: #ffffff;
+}
+
+main {
+	min-height: calc(100vh - 150px);
+}
+
+.app {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  padding: 2rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.app.darkTheme {
+  background-color: #242424;
+  transition: all 0.3s;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.app.lightTheme {
+  background-color: #ffffff;
+  transition: all 0.3s;
+  color: #242424;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 100px);
+  margin-bottom: 100px;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.results {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: auto 0;
+  gap: 10px;
+}
+
+.items {
+  width: calc(100% - 210px);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto 0;
+	min-height: 470px;
+}
+
+.flyoutContainer {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
 }
