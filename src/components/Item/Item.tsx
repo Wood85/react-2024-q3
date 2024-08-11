@@ -1,3 +1,4 @@
+'use client';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import styles from './Item.module.css';

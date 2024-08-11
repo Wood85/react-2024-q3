@@ -1,3 +1,4 @@
+'use client';
 import styles from './Details.module.css';
 import { IPeople } from './../../interfaces/interfaces.ts';
 import images from './../../data/images';

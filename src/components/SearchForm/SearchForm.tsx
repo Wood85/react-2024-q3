@@ -1,3 +1,4 @@
+'use client';
 import styles from './SearchForm.module.css';
 import { useRouter } from 'next/navigation';
 import { FormEvent, MouseEvent, useState, useContext, useEffect } from 'react';

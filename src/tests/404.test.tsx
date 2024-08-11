@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import NotFound from './../pages/404';
+import NotFound from './../app/not-found';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('next/navigation', () => ({

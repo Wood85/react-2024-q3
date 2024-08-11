@@ -1,3 +1,4 @@
+'use client';
 import styles from './Title.module.css';
 import { useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';

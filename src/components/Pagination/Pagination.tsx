@@ -1,3 +1,4 @@
+'use client';
 import styles from './Pagination.module.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
 import { useContext } from 'react';

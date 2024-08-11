@@ -1,3 +1,4 @@
+'use client';
 import styles from './FlyoutElement.module.css';
 import { MouseEvent, useState, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from './../../hooks/redux';
@@ -8,16 +9,12 @@ const FlyoutElement = () => {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = isDarkTheme ? styles.darkTheme : styles.lightTheme;
 
-  // const [show, setShow] = useState(true);
-  // const isShow = show ? styles.show : styles.hide;
-
   const selectedArr = useAppSelector((state) => state.selected.selected);
   const dispatch = useAppDispatch();
 
   const removeSelected = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(arrOfSelected([]));
-    // setShow(false);
   };
 
   const [url, setUrl] = useState<string>();
@@ -45,10 +42,6 @@ const FlyoutElement = () => {
   } else {
     wordItem = 'items';
   }
-
-  // if (selectedArr.length > 0) {
-  //   setShow(true);
-  // }
 
   return (
     <div

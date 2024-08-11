@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Page from './../pages/index';
+import Results from './../components/Results/Results';
 import storeMock, { character } from './mockStore';
 import { Provider } from 'react-redux';
 
@@ -24,11 +24,11 @@ const search = {
   results: [character],
 };
 
-describe('Page', () => {
-  test('renders the Page component', () => {
+describe('Results', () => {
+  test('renders the Results component', () => {
     render(
       <Provider store={storeMock}>
-        <Page searchParam={search} title="SW Search" info={character} pageNum={1} themeSet="dark" searchSet="j" />
+        <Results data={search} details={character} search={undefined} theme={undefined} />
       </Provider>,
     );
     const page = screen.getByTestId('search-page');
