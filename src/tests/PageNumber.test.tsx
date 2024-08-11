@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import InfoContainer from './../components/InfoContainer/InfoContainer';
+import PageNumber from './../components/PageNumber/PageNumber';
 import { Provider } from 'react-redux';
 import store from './mockStore';
 import { describe, expect, test, vi } from 'vitest';
@@ -17,14 +17,14 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
-describe('InfoContainer', () => {
-  test('renders the InfoContainer component', () => {
+describe('PageNumber', () => {
+  test('renders the PageNumber component', () => {
     render(
       <Provider store={store}>
-        <InfoContainer />
+        <PageNumber num={1} />
       </Provider>,
     );
-    const infoContainer = screen.getByTestId('info-container');
-    expect(infoContainer).toBeInTheDocument();
+    const pageNum = screen.getByTestId('page-num');
+    expect(pageNum).toBeInTheDocument();
   });
 });

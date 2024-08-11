@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for react-2024-q3/src/components/Input/Input.tsx</title>
+    <title>Code coverage report for react-2024-q3/src/components/Layout/Layout.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">react-2024-q3/src/components/Input</a> Input.tsx</h1>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">react-2024-q3/src/components/Layout</a> Layout.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -90,66 +90,60 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from './Input.module.css';
-import { ChangeEvent, useContext, useState } from 'react';
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from './Layout.module.css';
+import SearchForm from './../SearchForm/SearchForm';
+import Title from './../Title/Title';
+import SwitchTheme from './../SwitchTheme/SwitchTheme';
+import { FC, ReactNode, useContext } from 'react';
 import { ThemeContext } from './../../context/ThemeContext';
 &nbsp;
-interface IInputProps {
-  name: string;
-  value: string;
-  handleInputChange: (e: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; void;
+interface Props {
+  children?: ReactNode;
 }
 &nbsp;
-const Input = (props: IInputProps) =&gt; {
+const Layout: FC&lt;Props&gt; = ({ children }) =&gt; {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = <span class="branch-0 cbranch-no" title="branch not covered" >isDarkTheme ? styles.darkTheme : s</span>tyles.lightTheme;
-&nbsp;
-  const [searchQuery, setSearchQuery] = useState('');
-&nbsp;
   return (
-    &lt;input
-      data-testid="input"
-      type="text"
-      name={props.name}
-      className={`${styles.input} ${theme}`}
-      value={searchQuery}
-      onChange={<span class="fstat-no" title="function not covered" >(event) =&gt; setSearchQuery(event.target.value)}</span>
-    /&gt;
+    &lt;&gt;
+      &lt;section className={`${styles.search} ${theme}`}&gt;
+        &lt;Title /&gt;
+        &lt;SearchForm /&gt;
+        &lt;SwitchTheme /&gt;
+      &lt;/section&gt;
+      &lt;main className={`${styles.main} ${theme}`}&gt;{children}&lt;/main&gt;
+    &lt;/&gt;
   );
 };
 &nbsp;
-export default Input;
+export default Layout;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -157,7 +151,7 @@ export default Input;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-03T18:08:41.262Z
+                at 2024-08-11T08:43:41.670Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Info from './../components/Info/Info';
+import DetailsContainer from './../components/DetailsContainer/DetailsContainer';
 import { Provider } from 'react-redux';
 import store from './mockStore';
 import { describe, expect, test, vi } from 'vitest';
@@ -17,14 +17,14 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
-describe('Info', () => {
-  test('renders the Info component', () => {
+describe('DetailsContainer', () => {
+  test('renders the DetailsContainer component', () => {
     render(
       <Provider store={store}>
-        <Info />
+        <DetailsContainer />
       </Provider>,
     );
-    const info = screen.getByTestId('info');
-    expect(info).toBeInTheDocument();
+    const infoContainer = screen.getByTestId('info-container');
+    expect(infoContainer).toBeInTheDocument();
   });
 });

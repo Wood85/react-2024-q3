@@ -1,6 +1,8 @@
-import { expect, test, vi } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Page from './../pages/index';
+import storeMock, { character } from './mockStore';
+import { Provider } from 'react-redux';
 
 vi.mock('next/navigation', () => ({
   useRouter() {
@@ -15,7 +17,21 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
-test('Page', () => {
-  render(<Page />);
-  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined();
+const search = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [character],
+};
+
+describe('Page', () => {
+  test('renders the Page component', () => {
+    render(
+      <Provider store={storeMock}>
+        <Page searchParam={search} title="SW Search" info={character} pageNum={1} themeSet="dark" searchSet="j" />
+      </Provider>,
+    );
+    const page = screen.getByTestId('search-page');
+    expect(page).toBeInTheDocument();
+  });
 });

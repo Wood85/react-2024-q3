@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import Layout from './../components/Layout/Layout.tsx';
 import Router from 'next/router';
 import Spinner from './../components/spinner/spinner.tsx';
+import ErrorBoundary from './../components/ErrorBoundary/ErrorBoundary.tsx';
 
 export default function Page({
   searchParam,
@@ -65,42 +66,44 @@ export default function Page({
         <link rel="icon" type="image/png" href="/yoda.png" />
         <title>{title}</title>
       </Head>
-      <Layout>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div className={`app ${theme}`}>
-            <div className={`page ${theme}`} data-testid="search-page">
-              <section className="results">
-                <div className="items">
-                  {searchParam.count === 0 ? (
-                    <NotFound />
+      <ErrorBoundary>
+        <Layout>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <div className={`app ${theme}`}>
+              <div className={`page ${theme}`} data-testid="search-page">
+                <section className="results">
+                  <div className="items">
+                    {searchParam.count === 0 ? (
+                      <NotFound />
+                    ) : (
+                      searchParam.results.map((item: IPeople) => {
+                        return <Item key={crypto.randomUUID()} name={item.name} gender={item.gender} url={item.url} />;
+                      })
+                    )}
+                  </div>
+                  {details !== null ? (
+                    <DetailsContainer>
+                      <Details info={info} />
+                    </DetailsContainer>
                   ) : (
-                    searchParam.results.map((item: IPeople) => {
-                      return <Item key={crypto.randomUUID()} name={item.name} gender={item.gender} url={item.url} />;
-                    })
+                    ''
                   )}
-                </div>
-                {details !== null ? (
-                  <DetailsContainer>
-                    <Details info={info} />
-                  </DetailsContainer>
-                ) : (
-                  ''
-                )}
-              </section>
-              <section>
-                {searchParam.count < NUM_PER_PAGE + 1 || searchParam.results === undefined ? (
-                  ''
-                ) : (
-                  <Pagination pageNum={pageNum} />
-                )}
-              </section>
-              <section className="flyoutContainer">{selectedArr.length > 0 ? <FlyoutElement /> : ''}</section>
+                </section>
+                <section>
+                  {searchParam.count < NUM_PER_PAGE + 1 || searchParam.results === undefined ? (
+                    ''
+                  ) : (
+                    <Pagination pageNum={pageNum} />
+                  )}
+                </section>
+                <section className="flyoutContainer">{selectedArr.length > 0 ? <FlyoutElement /> : ''}</section>
+              </div>
             </div>
-          </div>
-        )}
-      </Layout>
+          )}
+        </Layout>
+      </ErrorBoundary>
     </>
   );
 }

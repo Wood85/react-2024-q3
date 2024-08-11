@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import ItemList from './../components/ItemList/ItemList';
+import Details from './../components/Details/Details';
 import { Provider } from 'react-redux';
 import store from './mockStore';
 import { describe, expect, test, vi } from 'vitest';
+import { character } from './mockStore';
 
 vi.mock('next/navigation', () => ({
   useRouter() {
@@ -17,14 +18,14 @@ vi.mock('next/navigation', () => ({
   },
 }));
 
-describe('ItemList', () => {
-  test('renders the ItemList component', () => {
+describe('Details', () => {
+  test('renders the Details component', () => {
     render(
       <Provider store={store}>
-        <ItemList />
+        <Details info={character} />
       </Provider>,
     );
-    const itemList = screen.getByTestId('item-list');
-    expect(itemList).toBeInTheDocument();
+    const info = screen.getByTestId('info');
+    expect(info).toBeInTheDocument();
   });
 });

@@ -14,10 +14,8 @@ const SwitchTheme = () => {
         e.preventDefault();
         toggleTheme();
         if (isDarkTheme) {
-          localStorage.setItem('SW_theme', 'light');
           Cookies.set('theme', 'light', { expires: 7 });
         } else {
-          localStorage.setItem('SW_theme', 'dark');
           Cookies.set('theme', 'dark', { expires: 7 });
         }
       }}

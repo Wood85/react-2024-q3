@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ErrorBoundary from './../components/ErrorBoundary/ErrorBoundary';
-import App from './../App';
+import Layout from './../components/Layout/Layout';
 
 describe('ErrorPage', () => {
   test('renders the ErrorPage component', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
     render(
       <ErrorBoundary>
-        <App />
+        <Layout />
       </ErrorBoundary>,
     );
     await waitFor(() => {

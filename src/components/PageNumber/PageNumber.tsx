@@ -36,6 +36,7 @@ const PageNumber = (props: IPageNumberProps) => {
     <>
       {Number(pageQuery) === num ? (
         <div
+          data-testid="page-num"
           className={`${styles.pageNumber} ${styles.pageNumberActive} ${theme}`}
           onClick={(e) => {
             e.stopPropagation();
@@ -46,6 +47,7 @@ const PageNumber = (props: IPageNumberProps) => {
         </div>
       ) : (
         <div
+          data-testid="page-num"
           className={`${styles.pageNumber} ${theme}`}
           onClick={(e) => {
             e.stopPropagation();

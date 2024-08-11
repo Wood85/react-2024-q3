@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.7% </span>
+                <span class="strong">57.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>44/68</span>
+                <span class='fraction'>37/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.7% </span>
+                <span class="strong">57.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>44/68</span>
+                <span class='fraction'>37/64</span>
             </div>
         
             
@@ -137,15 +137,7 @@
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -160,8 +152,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -185,11 +175,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -205,7 +193,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -226,12 +214,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from './Pagination.module.css';
 import PageNumber from './../../components/PageNumber/PageNumber';
 import { useContext } from 'react';
-import { useAppSelector } from './../../hooks/redux';
-import { NUM_PER_PAGE } from './../../utils/constants';
 import { ThemeContext } from './../../context/ThemeContext';
 import { useSearchParams, useRouter } from 'next/navigation';
 &nbsp;
-const Pagination = () =&gt; {
+const Pagination = (props: { pageNum: number }) =&gt; {
   const { isDarkTheme } = useContext(ThemeContext);
   const theme = <span class="branch-0 cbranch-no" title="branch not covered" >isDarkTheme ? styles.darkTheme : s</span>tyles.lightTheme;
 &nbsp;
@@ -241,8 +227,6 @@ const Pagination = () =&gt; {
   const encodedSearchQuery = encodeURI(searchQuery || '');
   const detailsQuery = search.get('details'<span class="branch-0 cbranch-no" title="branch not covered" >) ? search.get('details') : n</span>ull;
   const { push } = useRouter();
-&nbsp;
-  const count = useAppSelector((state) =&gt; state.characters.data.count);
 &nbsp;
   const onClickPrev = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (pageQuery !== null &amp;&amp; Number(pageQuery) &gt; 1) {</span>
@@ -264,12 +248,10 @@ const Pagination = () =&gt; {
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
 &nbsp;
-  const countPage = Math.ceil(count / NUM_PER_PAGE);
-&nbsp;
   const pageNumbers: number[] = [];
-  for (let i = 1; i &lt;= countPage; i++) {
-    pageNumbers.push(i);
-  }
+  for (let i = 1; i &lt;= props.pageNum; i++) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    pageNumbers.push(i);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
   return (
     &lt;div className={styles.pagination} data-testid="pagination"&gt;
       &lt;button
@@ -285,7 +267,7 @@ const Pagination = () =&gt; {
       &lt;/button&gt;
       &lt;div className={styles.pageNumbers}&gt;
         {pageNumbers.map((item: number) =&gt; (
-          &lt;PageNumber key={crypto.randomUUID()} num={item} /&gt;
+<span class="cstat-no" title="statement not covered" >          &lt;PageNumber key={crypto.randomUUID()} num={item} /&gt;</span>
         ))}
       &lt;/div&gt;
       &lt;button
@@ -310,7 +292,7 @@ export default Pagination;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-03T18:08:41.262Z
+                at 2024-08-11T08:43:41.670Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
