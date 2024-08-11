@@ -1,0 +1,24 @@
+.pageNumber {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageNumber.darkTheme {
+  background-color: #646c64;
+  transition: all 0.3s;
+  font-weight: 400;
+}
+
+.pageNumber.lightTheme {
+  background-color: #838883;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.pageNumber.pageNumberActive {
+  background-color: #007dffa3;
+}

@@ -1,0 +1,44 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #007dffa3;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.img {
+  height: 160px;
+  object-fit: cover;
+}
+
+.name {
+  margin: 0;
+}
+
+.buttonClose {
+  margin: auto;
+  background: #646c64;
+  height: 30px;
+  width: 90px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.buttonClose.darkTheme {
+  color: #ffffff;
+  background: #646c64;
+  transition: all 0.3s;
+}
+
+.buttonClose.lightTheme {
+  color: #000000;
+  background: #838883;
+  transition: all 0.3s;
+}

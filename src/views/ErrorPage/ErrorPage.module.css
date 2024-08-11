@@ -1,0 +1,40 @@
+.page {
+  font-weight: 700;
+  font-size: 22px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+	background-color: #686868;
+	height: 100dvh;
+}
+
+.page.darkTheme {
+  background-color: #686868;
+  transition: all 0.3s;
+}
+
+.page.themeLight {
+  background-color: #686868;
+  transition: all 0.3s;
+}
+
+.page h1 {
+  font-size: 36px;
+}
+
+.button {
+  font-size: 16px;
+  text-decoration: none;
+  width: 120px;
+  height: 38px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.button.lightTheme {
+  color: #ffffff;
+}

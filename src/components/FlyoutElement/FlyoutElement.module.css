@@ -1,0 +1,60 @@
+.flyout {
+	display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: flex;
+}
+
+
+.flyout.darkTheme {
+  background-color: #000000;
+  transition: all 0.3s;
+}
+
+.flyout.lightTheme {
+  background-color: #838883;
+  transition: all 0.3s;
+}
+
+.unselect,
+.download {
+  width: 100px;
+  height: 30px;
+  text-decoration: none;
+}
+
+.unselect.darkTheme,
+.download.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.unselect.lightTheme,
+.download.lightTheme {
+  color: #000000;
+  background-color: #007dffa3;
+  transition: all 0.3s;
+}
+
+.count.darkTheme {
+  background-color: #000000;
+  font-weight: 400;
+  transition: all 0.3s;
+}
+
+.count.lightTheme {
+  background-color: #838883;
+  font-weight: 600;
+  transition: all 0.3s;
+}

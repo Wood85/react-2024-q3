@@ -1,0 +1,14 @@
+.button {
+  width: 90px;
+  height: 30px;
+}
+
+.button.darkTheme {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.button.lightTheme {
+  color: #000000;
+  transition: all 0.3s;
+}
