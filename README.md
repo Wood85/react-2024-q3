@@ -31,4 +31,3 @@ Then navigate into project folder and run `npm install`
 - `npm run format:fix` formatting code
 - `npm run lint` start ESLint check
 - `npm run lint:fix` fix issues that can be fixed ESLint
-
