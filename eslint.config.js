@@ -25,7 +25,7 @@ export default tseslint.config(eslintConfigPrettier, {
     indent: ['error', 2],
     'linebreak-style': 0,
     quotes: ['error', 'single'],
-    // semi: ['error', 'always'],
+    semi: ['error', 'always'],
     '@typescript-eslint/no-explicit-any': 'error',
     'react/react-in-jsx-scope': 'off',
   },
