@@ -27,6 +27,7 @@ function Root() {
           const current = getForms.length === index + 1;
           return (
             <DataItem
+              key={crypto.randomUUID()}
               name={item.name}
               age={item.age}
               email={item.email}

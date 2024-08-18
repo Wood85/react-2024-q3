@@ -1,56 +1,13 @@
 import styles from './hook-form.module.css';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { forms } from '../../store/reducers/formSlice';
 import { useState } from 'react';
-import { countriesArr, countryType } from '../../store/reducers/countriesSlice';
+import { countryType } from '../../store/reducers/countriesSlice';
 import { useNavigate } from 'react-router-dom';
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .matches(/[A-Z]+|[А-Я]+/, 'The first letter must be uppercased')
-    .required('Enter your name'),
-  age: yup
-    .number()
-    .typeError('Age must be a number')
-    .required('Enter your age')
-    .min(0, 'Too little(should be no negative values)')
-    .max(2025, 'Were you born to our present day?'),
-  email: yup.string().email('Invalid email').required('Enter your email'),
-  password: yup
-    .string()
-    .required('Enter your password')
-    .min(8, 'Password must be at least 8 symbol')
-    .matches(/[0-9]/, 'Password must contain at least one number')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .matches(/[!"#$%&()*^+,.{}<>|@]/, 'Password must contain at least one special character(!"#$%&()*^+,.{}<>|@)'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Password must match')
-    .required('Confirm password is required'),
-  gender: yup.string().oneOf(['male', 'female']).required('Gender is required'),
-  checkbox: yup.boolean().oneOf([true], 'You must accept the terms and conditions').required(),
-  file: yup
-    .mixed<FileList>()
-    .required('required')
-    .test(
-      'fileSize',
-      'File size must be less than 500KB',
-      (files) => !files || files.length === 0 || Array.from(files).every((file) => file.size <= 500000),
-    )
-    .test('fileFormat', 'File type must be png or jpeg', (value) => {
-      if (value) {
-        const supportedFormats = ['png', 'jpeg'];
-        return supportedFormats.includes(value[0].name.split('.').pop() || '');
-      }
-      return true;
-    }),
-  country: yup.mixed<countryType>().required('Choose your country').oneOf(countriesArr, 'You must choose country'),
-});
+import schema from './../../utils/schema';
 
 interface Form {
   name: string;
@@ -99,7 +56,6 @@ const HookForm = () => {
     const newForms = JSON.parse(JSON.stringify(getForms));
     newForms.push(result);
     dispatch(forms(newForms));
-    console.log(newForms);
     reset();
     navigate('/');
   };

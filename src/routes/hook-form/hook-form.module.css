@@ -65,25 +65,3 @@ input[type='number'] {
 .checkbox {
   width: 15px;
 }
-
-.dropdownContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown {
-  background-color: #3b3b3b;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ffffff;
-}
-
-.dropdown:empty {
-  border: none;
-}
-
-.dropdownRow {
-  cursor: pointer;
-  text-align: start;
-  margin: 2px 0;
-}
