@@ -28,7 +28,7 @@ export default tseslint.config(eslintConfigPrettier, {
     semi: ['error', 'always'],
     '@typescript-eslint/no-explicit-any': 'error',
     'react/react-in-jsx-scope': 'off',
-		'no-unused-expressions': 'off',
-    '@typescript-eslint/no-unused-expressions': 'error'
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': 'error',
   },
 });

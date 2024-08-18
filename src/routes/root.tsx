@@ -1,6 +1,7 @@
 import styles from './root.module.css';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../hooks/redux';
+import DataItem from '../components/data-item/DataItem';
 
 function Root() {
   const getForms = useAppSelector((state) => state.form.forms);
@@ -21,7 +22,24 @@ function Root() {
           </li>
         </ul>
       </nav>
-      <div className={styles.results}>{getForms.length}</div>
+      <div className={styles.results}>
+        {getForms.map((item, index) => {
+          const current = getForms.length === index + 1;
+          return (
+            <DataItem
+              name={item.name}
+              age={item.age}
+              email={item.email}
+              gender={item.gender}
+              password={item.password}
+              checkbox={item.checkbox}
+              file={item.file}
+              country={item.country}
+              current={current}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

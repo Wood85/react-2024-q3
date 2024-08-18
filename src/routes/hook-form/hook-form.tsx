@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { forms } from '../../store/reducers/formSlice';
 import { useState } from 'react';
 import { countriesArr, countryType } from '../../store/reducers/countriesSlice';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object().shape({
   name: yup
@@ -64,11 +65,11 @@ interface Form {
 }
 
 const HookForm = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const getForms = useAppSelector((state) => state.form.forms);
   const getCountries = useAppSelector((state) => state.countries);
 
-  const [password, setPassword] = useState('');
   const [strength, setStrength] = useState('');
 
   const {
@@ -92,6 +93,7 @@ const HookForm = () => {
       gender: data.gender,
       checkbox: data.checkbox,
       file: localImageUrl,
+      country: data.country,
     };
 
     const newForms = JSON.parse(JSON.stringify(getForms));
@@ -99,6 +101,7 @@ const HookForm = () => {
     dispatch(forms(newForms));
     console.log(newForms);
     reset();
+    navigate('/');
   };
 
   function evaluatePasswordStrength(password: string) {
@@ -157,7 +160,6 @@ const HookForm = () => {
             <input
               {...register('password', {
                 onChange: (event) => {
-                  setPassword(event.target.value);
                   setStrength(evaluatePasswordStrength(event.target.value) || '');
                 },
               })}
@@ -165,7 +167,6 @@ const HookForm = () => {
               placeholder="Enter your password"
               type="password"
               id="password"
-              value={password}
             />
             <small>Password strength: {strength}</small>
             <div className={styles.error}>{errors.password?.message}</div>

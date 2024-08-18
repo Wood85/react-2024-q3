@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { countryType } from './countriesSlice';
 
 const emptyForm: Form = {
   name: '',
   age: 0,
   email: '',
   password: '',
-  confirmPassword: '',
   gender: 'male',
   checkbox: false,
   file: '',
+  country: 'Afghanistan',
 };
 
 export interface Form {
@@ -16,10 +17,10 @@ export interface Form {
   age: number;
   email: string;
   password: string;
-  confirmPassword: string;
   gender: 'male' | 'female';
   checkbox: boolean;
   file: string;
+  country: countryType;
 }
 
 const initialState: { currentForm: Form; forms: Form[] } = { currentForm: emptyForm, forms: [] };
@@ -33,10 +34,10 @@ export const formSlice = createSlice({
       state.currentForm.age = action.payload.age;
       state.currentForm.email = action.payload.email;
       state.currentForm.password = action.payload.password;
-      state.currentForm.confirmPassword = action.payload.confirmPassword;
       state.currentForm.gender = action.payload.gender;
       state.currentForm.checkbox = action.payload.checkbox;
       state.currentForm.file = action.payload.file;
+      state.currentForm.country = action.payload.country;
     },
     forms: (state, action: PayloadAction<Form[]>) => {
       state.forms = action.payload;
